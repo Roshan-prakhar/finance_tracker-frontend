@@ -160,18 +160,6 @@ const Expense = () => {
         }
     };
 
-    const handleEmailExpenseDetails = async () => {
-        try {
-            const response = await axiosConfig.get(API_ENDPOINTS.EMAIL_EXPENSE);
-            if(response.status === 200) {
-                toast.success("Email sent");
-            }
-        }catch (e) {
-            console.error("Error emailing expense details:", e);
-            toast.error("Failed to email expense details. Please try again.");
-        }
-    }
-
     useEffect(() => {
         fetchExpenseDetails();
         fetchExpenseCategories(); // Fetch categories when component mounts
@@ -194,7 +182,6 @@ const Expense = () => {
                             setOpenDeleteAlert({ show: true, data: id });
                         }}
                         onDownload={handleDownloadExpenseDetails}
-                        onEmail={handleEmailExpenseDetails}
                     />
 
                     <Modal

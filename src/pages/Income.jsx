@@ -140,18 +140,6 @@ const Income = () => {
         }
     }
 
-    const handleEmailIncomeDetails = async () => {
-        try {
-            const response = await axiosConfig.get(API_ENDPOINTS.EMAIL_INCOME);
-            if (response.status === 200) {
-                toast.success("Income details emailed successfully");
-            }
-        }catch(error) {
-            console.error('Error emailing income details:', error);
-            toast.error(error.response?.data?.message || "Failed to email income");
-        }
-    }
-
     useEffect(() => {
         fetchIncomeDetails();
         fetchIncomeCategories()
@@ -170,7 +158,6 @@ const Income = () => {
                         transactions={incomeData}
                         onDelete={(id) => setOpenDeleteAlert({show: true, data: id})}
                         onDownload={handleDownloadIncomeDetails}
-                        onEmail={handleEmailIncomeDetails}
                     />
 
                     {/* Add Income Modal */}

@@ -1,10 +1,10 @@
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {assets} from "../assets/assets.js";
 import Input from "../components/Input.jsx";
 import {validateEmail} from "../util/validation.js";
 import axiosConfig from "../util/axiosConfig.jsx";
-import {API_ENDPOINTS} from "../util/apiEndpoints.js";
+import {API_ENDPOINTS, BASE_URL} from "../util/apiEndpoints.js";
 import {AppContext} from "../context/AppContext.jsx";
 import {LoaderCircle} from "lucide-react";
 import Header from "../components/Header.jsx";
@@ -17,6 +17,31 @@ const Login = () => {
     const {setUser} = useContext(AppContext);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get("token");
+        if (!token) {
+            return;
+        }
+
+        localStorage.setItem("token", token);
+        (async () => {
+            try {
+                const response = await axiosConfig.get(API_ENDPOINTS.GET_USER_INFO);
+                if (response.data) {
+                    setUser(response.data);
+                }
+                navigate("/dashboard", {replace: true});
+            } catch (e) {
+                navigate("/dashboard", {replace: true});
+            }
+        })();
+    }, [navigate, setUser]);
+
+    const handleGoogleLogin = () => {
+        window.location.href = `${BASE_URL}/oauth2/authorization/google`;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -77,6 +102,10 @@ const Login = () => {
                         <p className="text-sm text-slate-700 text-center mb-8">
                             Please enter your details to login in
                         </p>
+
+                        <button type="button" className="btn-primary w-full py-3 text-lg font-medium" onClick={handleGoogleLogin}>
+                            Continue with Google
+                        </button>
 
                         <form onSubmit={handleSubmit} className="space-y-4">
 
