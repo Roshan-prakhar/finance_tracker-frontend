@@ -1,6 +1,6 @@
-export const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api/v1.0";
+export const BASE_URL = import.meta.env._API_BASE_URL || "http://localhost:8080/api/v1.0";
 // OAuth URL is at root level (no /api/v1.0 context path)
-export const BACKEND_ROOT_URL = import.meta.env.VITE__ROOT_URL || "http://localhost:8080";
+export const BACKEND_ROOT_URL = import.meta.env.VITE_ROOT_URL || "http://localhost:8080";
 const CLOUDINARY_CLOUD_NAME = "dhadf5h7j";
 
 export const API_ENDPOINTS = {
