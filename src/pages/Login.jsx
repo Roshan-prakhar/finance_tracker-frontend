@@ -4,7 +4,7 @@ import {assets} from "../assets/assets.js";
 import Input from "../components/Input.jsx";
 import {validateEmail} from "../util/validation.js";
 import axiosConfig from "../util/axiosConfig.jsx";
-import {API_ENDPOINTS, BASE_URL} from "../util/apiEndpoints.js";
+import {API_ENDPOINTS, BASE_URL, BACKEND_ROOT_URL} from "../util/apiEndpoints.js";
 import {AppContext} from "../context/AppContext.jsx";
 import {LoaderCircle} from "lucide-react";
 import Header from "../components/Header.jsx";
@@ -40,7 +40,7 @@ const Login = () => {
     }, [navigate, setUser]);
 
     const handleGoogleLogin = () => {
-        window.location.href = `${BASE_URL}/oauth2/authorization/google`;
+        window.location.href = `${BACKEND_ROOT_URL}/oauth2/authorization/google`;
     };
 
     const handleSubmit = async (e) => {
