@@ -6,6 +6,11 @@
   VITE_API_BASE_URL = "https://your-backend.onrender.com/api/v1.0"
 
 [[redirects]]
+  from = "/register"
+  to = "/signup"
+  status = 301
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
