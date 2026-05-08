@@ -15,7 +15,8 @@ const App = () => {
             <Toaster />
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Root />} />
+                    {/* Landing page is the first thing every visitor sees */}
+                    <Route path="/" element={<LandingPage />} />
                     <Route path="/home" element={<LandingPage />} />
                     <Route path="/dashboard" element={<Home />} />
                     <Route path="/income" element={<Income />} />
@@ -24,19 +25,12 @@ const App = () => {
                     <Route path="/filter" element={<Filter />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
+                    {/* Anything else falls back to landing */}
+                    <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </BrowserRouter>
         </>
     )
-}
-
-const Root = () => {
-    const isAuthenticated = !!localStorage.getItem("token");
-    return isAuthenticated ? (
-        <Navigate to="/dashboard" />
-    ) : (
-      <Navigate to="/home" />
-    );
 }
 
 export default App;

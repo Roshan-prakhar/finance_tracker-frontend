@@ -29,19 +29,22 @@ export const addThousandsSeparator = (num) => {
 
 export const prepareIncomeLineChartData = (data = []) => {
     // Group data by date
-    const groupedByDate = data.reduce((acc, item) => {
-        const dateKey = item.date; // Assuming 'date' is in 'YYYY-MM-DD' format
+    const groupedByDate = (data || []).reduce((acc, item) => {
+        const dateKey = item.date; // 'YYYY-MM-DD' from backend LocalDate
+        if (!dateKey) return acc;
 
         if (!acc[dateKey]) {
             acc[dateKey] = {
-                date: dateKey, // Keep the raw date for sorting if needed
+                date: dateKey,
                 totalAmount: 0,
-                items: [], // Array to store original items for this date
+                items: [],
             };
         }
 
-        acc[dateKey].totalAmount += item.amount;
-        acc[dateKey].items.push(item); // Add the original item to the array
+        // Coerce BigDecimal (string or number) into a real Number; same for nested items
+        const numericAmount = Number(item.amount) || 0;
+        acc[dateKey].totalAmount += numericAmount;
+        acc[dateKey].items.push({ ...item, amount: numericAmount });
         return acc;
     }, {});
 
