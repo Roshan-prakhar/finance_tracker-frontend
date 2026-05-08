@@ -1,45 +1,49 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
+import Input from "../components/Input.jsx";
 import {validateEmail} from "../util/validation.js";
 import axiosConfig from "../util/axiosConfig.jsx";
 import {API_ENDPOINTS} from "../util/apiEndpoints.js";
-import toast from "react-hot-toast";
+import {AppContext} from "../context/AppContext.jsx";
 import {LoaderCircle} from "lucide-react";
-import ProfilePhotoSelector from "../components/ProfilePhotoSelector.jsx";
-import uploadProfileImage from "../util/uploadProfileImage.js";
 import Header from "../components/Header.jsx";
 
-const Signup = () => {
-    const [fullName, setFullName] = useState("");
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [profilePhoto, setProfilePhoto] = useState(null);
+    const {setUser} = useContext(AppContext);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let profileImageUrl = "";
         setIsLoading(true);
-
-        if (!fullName.trim()) { setError("Please enter your fullname"); setIsLoading(false); return; }
-        if (!validateEmail(email)) { setError("Please enter valid email address"); setIsLoading(false); return; }
-        if (!password.trim()) { setError("Please enter your password"); setIsLoading(false); return; }
+        if (!validateEmail(email)) {
+            setError("Please enter valid email address");
+            setIsLoading(false);
+            return;
+        }
+        if (!password.trim()) {
+            setError("Please enter your password");
+            setIsLoading(false);
+            return;
+        }
         setError("");
-
         try {
-            if (profilePhoto) {
-                const imageUrl = await uploadProfileImage(profilePhoto);
-                profileImageUrl = imageUrl || "";
+            const response = await axiosConfig.post(API_ENDPOINTS.LOGIN, { email, password });
+            const {token, user} = response.data;
+            if (token) {
+                localStorage.setItem("token", token);
+                setUser(user);
+                navigate("/dashboard");
             }
-            const response = await axiosConfig.post(API_ENDPOINTS.REGISTER, { fullName, email, password, profileImageUrl });
-            if (response.status === 201) {
-                toast.success("Profile created successfully.");
-                navigate("/login");
+        } catch(error) {
+            if (error.response && error.response.data.message) {
+                setError(error.response.data.message);
+            } else {
+                setError(error.message);
             }
-        } catch(err) {
-            setError(err.message);
         } finally {
             setIsLoading(false);
         }
@@ -50,17 +54,18 @@ const Signup = () => {
             <Header />
             <div className="flex-grow flex items-center justify-center py-10 px-4 relative overflow-hidden">
                 {/* Decorative blobs */}
-                <div className="absolute top-0 right-0 w-80 h-80 rounded-full opacity-20 translate-x-1/2 -translate-y-1/2"
+                <div className="absolute top-0 left-0 w-80 h-80 rounded-full opacity-20 -translate-x-1/2 -translate-y-1/2"
                     style={{background: 'radial-gradient(circle, #16a34a, transparent)'}}></div>
-                <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full opacity-10 -translate-x-1/2 translate-y-1/2"
+                <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full opacity-10 translate-x-1/2 translate-y-1/2"
                     style={{background: 'radial-gradient(circle, #15803d, transparent)'}}></div>
 
-                <div className="relative z-10 w-full max-w-lg">
+                <div className="relative z-10 w-full max-w-md">
+                    {/* Card */}
                     <div className="bg-white rounded-3xl shadow-2xl overflow-hidden" style={{boxShadow: '0 20px 60px rgba(22,163,74,0.12)'}}>
                         {/* Green top bar */}
                         <div className="h-1.5 w-full" style={{background: 'linear-gradient(90deg, #16a34a, #22c55e, #16a34a)'}}></div>
 
-                        <div className="p-8 md:p-10 max-h-[85vh] overflow-y-auto">
+                        <div className="p-8 md:p-10">
                             {/* Logo mark */}
                             <div className="flex items-center gap-3 mb-8">
                                 <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{background: '#16a34a'}}>
@@ -71,46 +76,31 @@ const Signup = () => {
                                 <span className="text-lg font-bold text-gray-900 tracking-tight">FinTrack</span>
                             </div>
 
-                            <h2 className="text-2xl font-bold text-gray-900 mb-1">Create your account</h2>
-                            <p className="text-sm text-gray-400 mb-8">Start your journey to better financial health</p>
+                            <h2 className="text-2xl font-bold text-gray-900 mb-1">Welcome back</h2>
+                            <p className="text-sm text-gray-400 mb-8">Sign in to manage your finances</p>
 
                             <form onSubmit={handleSubmit} className="space-y-5">
-                                {/* Profile Photo */}
-                                <div className="flex justify-center mb-2">
-                                    <ProfilePhotoSelector image={profilePhoto} setImage={setProfilePhoto} />
+                                <div>
+                                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Email Address</label>
+                                    <input
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="name@example.com"
+                                        type="text"
+                                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 bg-gray-50 focus:outline-none focus:border-green-500 focus:ring-2 focus:bg-white transition-all"
+                                        style={{'--tw-ring-color': 'rgba(22,163,74,0.1)'}}
+                                    />
                                 </div>
 
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Full Name</label>
-                                        <input
-                                            value={fullName}
-                                            onChange={(e) => setFullName(e.target.value)}
-                                            placeholder="John Doe"
-                                            type="text"
-                                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 bg-gray-50 focus:outline-none focus:border-green-500 focus:ring-2 focus:bg-white transition-all"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Email Address</label>
-                                        <input
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            placeholder="name@example.com"
-                                            type="text"
-                                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 bg-gray-50 focus:outline-none focus:border-green-500 focus:ring-2 focus:bg-white transition-all"
-                                        />
-                                    </div>
-                                    <div className="col-span-1 sm:col-span-2">
-                                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Password</label>
-                                        <input
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            placeholder="Create a strong password"
-                                            type="password"
-                                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 bg-gray-50 focus:outline-none focus:border-green-500 focus:ring-2 focus:bg-white transition-all"
-                                        />
-                                    </div>
+                                <div>
+                                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Password</label>
+                                    <input
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        placeholder="Enter your password"
+                                        type="password"
+                                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 bg-gray-50 focus:outline-none focus:border-green-500 focus:ring-2 focus:bg-white transition-all"
+                                    />
                                 </div>
 
                                 {error && (
@@ -129,10 +119,11 @@ const Signup = () => {
                                     type="submit"
                                 >
                                     {isLoading ? (
-                                        <><LoaderCircle className="animate-spin w-4 h-4" /> Creating Account...</>
-                                    ) : "Create Account"}
+                                        <><LoaderCircle className="animate-spin w-4 h-4" /> Signing in...</>
+                                    ) : "Sign In"}
                                 </button>
 
+                                {/* Divider */}
                                 <div className="flex items-center gap-3 py-1">
                                     <div className="flex-1 h-px bg-gray-100"></div>
                                     <span className="text-xs text-gray-300">or</span>
@@ -140,19 +131,23 @@ const Signup = () => {
                                 </div>
 
                                 <p className="text-sm text-gray-500 text-center">
-                                    Already have an account?{' '}
-                                    <Link to="/login" className="font-semibold transition-colors" style={{color: '#16a34a'}}>
-                                        Sign in
+                                    Don't have an account?{' '}
+                                    <Link to="/signup" className="font-semibold transition-colors" style={{color: '#16a34a'}}>
+                                        Create one
                                     </Link>
                                 </p>
                             </form>
                         </div>
                     </div>
-                    <p className="text-center text-xs text-gray-400 mt-6">Your financial data is encrypted and secure.</p>
+
+                    {/* Bottom note */}
+                    <p className="text-center text-xs text-gray-400 mt-6">
+                        Your financial data is encrypted and secure.
+                    </p>
                 </div>
             </div>
         </div>
     );
 };
 
-export default Signup;
+export default Login;
