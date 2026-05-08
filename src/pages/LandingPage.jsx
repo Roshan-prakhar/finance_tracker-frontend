@@ -1,3 +1,5 @@
+import {useEffect} from "react";
+import {useLocation} from "react-router-dom";
 import Header from "../components/Header.jsx";
 import HeroSection from "../components/HeroSection.jsx";
 import ProductShowcase from "../components/ProductShowcase.jsx";
@@ -6,6 +8,17 @@ import StatsSection from "../components/StatsSection.jsx";
 import Footer from "../components/Footer.jsx";
 
 const LandingPage = () => {
+    const {hash} = useLocation();
+
+    useEffect(() => {
+        if (hash) {
+            const el = document.querySelector(hash);
+            if (el) {
+                setTimeout(() => el.scrollIntoView({behavior: "smooth", block: "start"}), 100);
+            }
+        }
+    }, [hash]);
+
     return (
         <div className="bg-[#F9FAFB] text-gray-800 min-h-screen font-['Inter',_'Segoe_UI',_sans-serif] antialiased">
             <Header />

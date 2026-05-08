@@ -10,6 +10,7 @@ import ExpenseList from "../components/ExpenseList.jsx";
 import Modal from "../components/Modal.jsx";
 import AddExpenseForm from "../components/AddExpenseForm.jsx";
 import DeleteAlert from "../components/DeleteAlert.jsx";
+import {Coins, Plus} from "lucide-react";
 
 const Expense = () => {
     useUser();
@@ -179,14 +180,30 @@ const Expense = () => {
 
     return (
         <Dashboard activeMenu="Expense">
-            <div className="my-5 mx-auto">
-                {/* Page Header */}
-                <div className="mb-6">
-                    <h1 className="text-xl font-bold text-gray-900">Expenses</h1>
-                    <p className="text-sm text-gray-400 mt-0.5">Monitor and control your spending habits</p>
+            <div className="max-w-full mx-auto">
+                {/* Page Header Card */}
+                <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 mb-5">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-500/20">
+                                <Coins className="w-6 h-6 text-white" />
+                            </div>
+                            <div>
+                                <h2 className="text-xl font-bold text-gray-900 tracking-tight">Expenses</h2>
+                                <p className="text-sm text-gray-400 mt-0.5">Monitor and control your spending habits</p>
+                            </div>
+                        </div>
+                        <button
+                            onClick={() => setOpenAddExpenseModal(true)}
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-red-500/25 hover:shadow-red-500/40 transition-all duration-200 active:scale-[0.98]"
+                        >
+                            <Plus size={16} strokeWidth={2.5} />
+                            Add Expense
+                        </button>
+                    </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-6">
+                <div className="grid grid-cols-1 gap-5">
                     <ExpenseOverview
                         transactions={expenseData}
                         onExpenseIncome={() => setOpenAddExpenseModal(true)}

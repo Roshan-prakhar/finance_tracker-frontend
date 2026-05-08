@@ -5,9 +5,8 @@ import axiosConfig from "../util/axiosConfig.jsx";
 import {API_ENDPOINTS} from "../util/apiEndpoints.js";
 import toast from "react-hot-toast";
 import IncomeList from "../components/IncomeList.jsx";
-import log from "eslint-plugin-react/lib/util/log.js";
 import Modal from "../components/Modal.jsx";
-import {Plus} from "lucide-react";
+import {Plus, Wallet} from "lucide-react";
 import AddIncomeForm from "../components/AddIncomeForm.jsx";
 import DeleteAlert from "../components/DeleteAlert.jsx";
 import IncomeOverview from "../components/IncomeOverview.jsx";
@@ -159,14 +158,30 @@ const Income = () => {
 
     return (
         <Dashboard activeMenu="Income">
-            <div className="my-5 mx-auto">
-                {/* Page Header */}
-                <div className="mb-6">
-                    <h1 className="text-xl font-bold text-gray-900">Income</h1>
-                    <p className="text-sm text-gray-400 mt-0.5">Track and manage all your income sources</p>
+            <div className="max-w-full mx-auto">
+                {/* Page Header Card */}
+                <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 mb-5">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg shadow-green-500/20">
+                                <Wallet className="w-6 h-6 text-white" />
+                            </div>
+                            <div>
+                                <h2 className="text-xl font-bold text-gray-900 tracking-tight">Income</h2>
+                                <p className="text-sm text-gray-400 mt-0.5">Track and manage all your income sources</p>
+                            </div>
+                        </div>
+                        <button
+                            onClick={() => setOpenAddIncomeModal(true)}
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-green-500/25 hover:shadow-green-500/40 transition-all duration-200 active:scale-[0.98]"
+                        >
+                            <Plus size={16} strokeWidth={2.5} />
+                            Add Income
+                        </button>
+                    </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-6">
+                <div className="grid grid-cols-1 gap-5">
                     <IncomeOverview transactions={incomeData} onAddIncome={() => setOpenAddIncomeModal(true)} />
 
                     <IncomeList

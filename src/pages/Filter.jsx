@@ -1,6 +1,6 @@
 import Dashboard from "../components/Dashboard.jsx";
 import {useUser} from "../hooks/useUser.jsx";
-import {Search} from "lucide-react";
+import {Search, SlidersHorizontal} from "lucide-react";
 import {useState} from "react";
 import axiosConfig from "../util/axiosConfig.jsx";
 import {API_ENDPOINTS} from "../util/apiEndpoints.js";
@@ -44,11 +44,17 @@ const Filter = () => {
 
     return (
         <Dashboard activeMenu="Filters">
-            <div className="my-5 mx-auto">
-                <div className="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 className="text-xl font-bold text-gray-900">Filter Transactions</h2>
-                        <p className="text-sm text-gray-400 mt-0.5">Search and filter your income &amp; expenses</p>
+            <div className="max-w-full mx-auto">
+                {/* Page Header Card */}
+                <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 mb-5">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-violet-500 to-violet-600 rounded-xl flex items-center justify-center shadow-lg shadow-violet-500/20">
+                            <SlidersHorizontal className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-bold text-gray-900 tracking-tight">Filter Transactions</h2>
+                            <p className="text-sm text-gray-400 mt-0.5">Search and filter your income &amp; expenses</p>
+                        </div>
                     </div>
                 </div>
 
