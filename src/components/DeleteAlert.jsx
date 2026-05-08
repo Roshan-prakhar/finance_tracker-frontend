@@ -22,8 +22,7 @@ const DeleteAlert = ({content, onDelete}) => {
                     onClick={handleDelete}
                     disabled={loading}
                     type="button"
-                    className={`inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-white rounded-xl transition-all duration-200 cursor-pointer ${loading ? 'opacity-60 cursor-not-allowed' : 'hover:shadow-lg hover:shadow-red-500/25'}`}
-                    style={{ background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)' }}
+                    className={`inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-red-500 rounded-xl transition-all duration-200 cursor-pointer ${loading ? 'opacity-60 cursor-not-allowed' : 'hover:bg-red-600'}`}
                 >
                     {loading ? (
                         <>

@@ -6,10 +6,10 @@ const ProductShowcase = () => {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="relative max-w-5xl mx-auto">
                     {/* Glow behind image */}
-                    <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/10 via-cyan-500/10 to-purple-500/10 rounded-3xl blur-2xl"></div>
+                    <div className="absolute -inset-4 bg-green-100/40 rounded-3xl blur-2xl"></div>
 
                     {/* Image container */}
-                    <div className="relative rounded-2xl overflow-hidden border border-gray-200/50 shadow-2xl shadow-purple-500/10">
+                    <div className="relative rounded-2xl overflow-hidden border border-gray-200/50 shadow-2xl shadow-gray-300/30">
                         <img
                             src={assets.landing}
                             className="w-full h-auto object-cover"

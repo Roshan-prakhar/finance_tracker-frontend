@@ -1,7 +1,6 @@
 import {useState, useEffect} from "react";
-import {assets} from "../assets/assets.js";
 import {Link} from "react-router-dom";
-import {Menu, X, Sparkles} from "lucide-react";
+import {Menu, X, ArrowRight} from "lucide-react";
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,60 +13,56 @@ const Header = () => {
     }, []);
 
     const navLinks = [
-        { name: 'Home', to: '/home' },
-        { name: 'Features', to: '/home#features' },
-        { name: 'About', to: '/home#about' }
+        { name: 'Features', to: '#features' },
+        { name: 'About', to: '#about' },
+        { name: 'Pricing', to: '#pricing' }
     ];
 
     return (
-        <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'glass shadow-sm' : 'bg-white/50 backdrop-blur-sm'}`}>
+        <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-xl shadow-sm border-b border-gray-100' : 'bg-transparent'}`}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16 lg:h-20">
+                <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <Link to="/home" className="flex items-center gap-2.5 group">
-                        <div className="relative">
-                            <img src={assets.logo} alt="logo" className="h-9 w-9 transition-transform duration-300 group-hover:scale-110" />
-                            <div className="absolute -inset-1 bg-purple-400/20 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <Link to="/" className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
+                            <span className="text-white font-bold text-sm">₹</span>
                         </div>
-                        <span className="text-lg font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                            Money Manager
-                        </span>
+                        <span className="text-lg font-bold text-gray-900">Finve</span>
                     </Link>
 
                     {/* Desktop Navigation */}
                     <nav className="hidden lg:flex items-center space-x-1">
                         {navLinks.map((link) => (
-                            <Link
-                                to={link.to}
+                            <a
+                                href={link.to}
                                 key={link.name}
-                                className="relative px-4 py-2 text-sm font-medium text-gray-600 hover:text-purple-700 transition-colors duration-200 rounded-lg hover:bg-purple-50"
+                                className="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors duration-200 rounded-lg"
                             >
                                 {link.name}
-                            </Link>
+                            </a>
                         ))}
                     </nav>
 
                     {/* Action Buttons & Hamburger Menu */}
                     <div className="flex items-center gap-3">
-                        <div className="hidden sm:flex items-center gap-3">
+                        <div className="hidden sm:flex items-center gap-2">
                             <Link
                                 to="/login"
-                                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-purple-700 transition-colors duration-200 rounded-lg hover:bg-purple-50"
+                                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors duration-200"
                             >
                                 Log in
                             </Link>
                             <Link
                                 to="/signup"
-                                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-[1.02] active:scale-[0.98]"
-                                style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)' }}
+                                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-xl transition-all duration-200 hover:bg-green-700"
                             >
-                                <Sparkles className="w-4 h-4" />
                                 Get Started
+                                <ArrowRight className="w-4 h-4" />
                             </Link>
                         </div>
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="lg:hidden p-2 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors"
+                            className="lg:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
                             aria-label="Toggle menu"
                         >
                             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -78,32 +73,31 @@ const Header = () => {
 
             {/* Mobile Navigation */}
             {isMenuOpen && (
-                <div className="lg:hidden animate-fade-in border-t border-gray-100">
-                    <div className="container mx-auto px-4 py-4 bg-white/95 backdrop-blur-lg">
+                <div className="lg:hidden animate-slide-down border-t border-gray-100">
+                    <div className="container mx-auto px-4 py-4 bg-white">
                         <nav className="flex flex-col space-y-1">
                             {navLinks.map((link) => (
-                                <Link
+                                <a
                                     key={link.name}
-                                    to={link.to}
+                                    href={link.to}
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="px-4 py-3 text-gray-600 hover:text-purple-700 hover:bg-purple-50 rounded-xl transition-colors font-medium"
+                                    className="px-4 py-3 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-xl transition-colors font-medium"
                                 >
                                     {link.name}
-                                </Link>
+                                </a>
                             ))}
                             <div className="flex flex-col space-y-2 pt-4 mt-2 border-t border-gray-100">
                                 <Link
                                     to="/login"
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="px-4 py-3 text-gray-700 hover:text-purple-700 hover:bg-purple-50 rounded-xl transition-colors font-medium"
+                                    className="px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl transition-colors font-medium"
                                 >
                                     Log in
                                 </Link>
                                 <Link
                                     to="/signup"
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="px-4 py-3 text-center text-white font-semibold rounded-xl transition-all"
-                                    style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)' }}
+                                    className="px-4 py-3 text-center text-white font-semibold bg-green-600 rounded-xl transition-all hover:bg-green-700"
                                 >
                                     Get Started Free
                                 </Link>

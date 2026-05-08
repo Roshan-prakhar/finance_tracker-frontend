@@ -19,7 +19,7 @@ const Modal = ({ isOpen, onClose, children, title }) => {
 
                         <button
                             type="button"
-                            className="text-gray-400 bg-gray-50 hover:bg-gray-100 hover:text-gray-600 rounded-xl text-sm w-9 h-9 flex justify-center items-center transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                            className="text-gray-400 bg-gray-50 hover:bg-gray-100 hover:text-gray-600 rounded-lg text-sm w-8 h-8 flex justify-center items-center transition-all duration-200 cursor-pointer"
                             onClick={onClose}
                         >
                             <X className="w-4 h-4" />

@@ -5,7 +5,7 @@ const features = [
         icon: BarChart3,
         title: "Expense Tracking",
         description: "Track every penny with categorized expenses and visual breakdowns of your spending patterns.",
-        color: "bg-purple-50 text-purple-600",
+        color: "bg-green-50 text-green-600",
     },
     {
         icon: PieChart,
@@ -47,7 +47,7 @@ const FeaturesSection = () => {
                 <div className="text-center max-w-2xl mx-auto mb-16">
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                         Everything you need to{' '}
-                        <span className="gradient-text">manage money</span>
+                        <span className="text-green-600">manage money</span>
                     </h2>
                     <p className="text-lg text-gray-500">
                         Powerful features designed to help you take control of your financial life with ease and confidence.
@@ -59,7 +59,7 @@ const FeaturesSection = () => {
                     {features.map((feature, index) => (
                         <div
                             key={feature.title}
-                            className="group relative bg-white rounded-2xl p-7 border border-gray-100 hover:border-purple-100 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/5 hover:-translate-y-1"
+                            className="group relative bg-white rounded-2xl p-7 border border-gray-100 hover:border-green-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
                             style={{animationDelay: `${index * 0.1}s`}}
                         >
                             <div className={`w-12 h-12 rounded-xl ${feature.color} flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110`}>

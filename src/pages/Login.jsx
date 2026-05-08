@@ -67,25 +67,22 @@ const Login = () => {
             <div className="flex-grow w-full relative flex items-center justify-center overflow-hidden py-8">
                 {/* Background decorations */}
                 <div className="absolute inset-0 -z-10">
-                    <div className="absolute top-0 left-0 w-96 h-96 bg-purple-200/40 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-                    <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-200/30 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-100/20 rounded-full blur-3xl"></div>
+                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-green-50 rounded-full blur-3xl opacity-60"></div>
+                    <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-50 rounded-full blur-3xl opacity-40"></div>
                 </div>
 
                 <div className="relative z-10 w-full max-w-md px-6 animate-fade-in-up">
-                    <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl shadow-purple-500/5 border border-white/50 p-8 md:p-10">
+                    <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100 p-8 md:p-10">
                         {/* Header */}
                         <div className="text-center mb-8">
-                            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-purple-50 mb-4">
-                                <svg className="w-7 h-7 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
+                            <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-green-50 mb-4">
+                                <span className="text-xl font-bold text-green-600">₹</span>
                             </div>
                             <h3 className="text-2xl font-bold text-gray-900">
-                                Welcome Back
+                                Welcome back
                             </h3>
                             <p className="text-sm text-gray-500 mt-1">
-                                Enter your credentials to access your account
+                                Sign in to your Finve account
                             </p>
                         </div>
 
@@ -130,7 +127,7 @@ const Login = () => {
 
                             <p className="text-sm text-gray-500 text-center pt-2">
                                 Don't have an account?{' '}
-                                <Link to="/signup" className="font-semibold text-purple-600 hover:text-purple-700 transition-colors">
+                                <Link to="/signup" className="font-semibold text-green-600 hover:text-green-700 transition-colors">
                                     Create one
                                 </Link>
                             </p>

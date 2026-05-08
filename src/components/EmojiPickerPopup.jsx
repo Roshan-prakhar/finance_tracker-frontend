@@ -13,14 +13,14 @@ const EmojiPickerPopup = ({icon, onSelect}) => {
             <div
                 onClick={() => setIsOpen(true)}
                 className="flex items-center gap-3 cursor-pointer group">
-                <div className="w-12 h-12 flex items-center justify-center text-2xl bg-purple-50 text-purple-500 rounded-xl border border-purple-100 transition-all duration-200 group-hover:border-purple-200 group-hover:shadow-sm">
+                <div className="w-12 h-12 flex items-center justify-center text-2xl bg-green-50 text-green-500 rounded-xl border border-green-100 transition-all duration-200 group-hover:border-green-200 group-hover:shadow-sm">
                     {icon ? (
                         <img src={icon} alt="Icon" className="w-8 h-8" />
                     ): (
                         <Image className="w-5 h-5" />
                     )}
                 </div>
-                <span className="text-sm font-medium text-gray-600 group-hover:text-purple-600 transition-colors">
+                <span className="text-sm font-medium text-gray-600 group-hover:text-green-600 transition-colors">
                     {icon ? "Change icon" : "Pick Icon"}
                 </span>
             </div>

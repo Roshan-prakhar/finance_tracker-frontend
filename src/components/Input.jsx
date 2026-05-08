@@ -13,7 +13,7 @@ const Input = ({label, value, onChange, placeholder, type, isSelect, options}) =
             <label className="text-[13px] font-medium text-gray-700 block mb-1.5">
                 {label}
             </label>
-            <div className={`relative rounded-xl border transition-all duration-200 ${isFocused ? 'border-purple-400 ring-2 ring-purple-100' : 'border-gray-200 hover:border-gray-300'}`}>
+            <div className={`relative rounded-xl border transition-all duration-200 ${isFocused ? 'border-green-400 ring-2 ring-green-50' : 'border-gray-200 hover:border-gray-300'}`}>
                 {isSelect ? (
                     <select
                         className="w-full bg-transparent outline-none rounded-xl py-2.5 px-3.5 text-gray-700 text-sm appearance-none cursor-pointer"
@@ -45,7 +45,7 @@ const Input = ({label, value, onChange, placeholder, type, isSelect, options}) =
                         {showPassword ? (
                             <Eye
                                 size={18}
-                                className="text-purple-500 hover:text-purple-600 transition-colors"
+                                className="text-green-500 hover:text-green-600 transition-colors"
                                 onClick={toggleShowPassword}
                             />
                         ) : (
