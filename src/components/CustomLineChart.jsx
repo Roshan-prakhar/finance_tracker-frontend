@@ -31,23 +31,18 @@ const CustomLineChart = ({ data }) => {
             const categoriesInTooltip = Object.values(groupedItemsForTooltip);
 
             return (
-                <div className="bg-white shadow-md rounded-lg p-2 border border-gray-300">
-                    {/* Display the formatted date at the top of the tooltip */}
-                    <p className="text-sm font-semibold text-gray-800 mb-2">{label}</p>
-                    <hr className="my-1 border-gray-200" />
-                    {/* Display the total amount for the date */}
-                    <p className="text-sm text-gray-700 font-bold mb-2">
-                        Total: <span className="text-purple-800">&#8377;{addThousandsSeparator(dataPoint.totalAmount)}</span>
+                <div className="bg-white shadow-xl shadow-gray-200/50 rounded-xl p-3 border border-gray-100">
+                    <p className="text-xs font-medium text-gray-500 mb-1">{label}</p>
+                    <p className="text-sm text-gray-900 font-bold">
+                        &#8377;{addThousandsSeparator(dataPoint.totalAmount)}
                     </p>
 
-                    {/* Iterate over the newly grouped categories for a consolidated view */}
                     {categoriesInTooltip && categoriesInTooltip.length > 0 && (
-                        <div className="mt-2 pt-2 border-t border-gray-200">
-                            <p className="text-xs font-semibold text-gray-600 mb-1">Details:</p>
+                        <div className="mt-2 pt-2 border-t border-gray-100 space-y-1">
                             {categoriesInTooltip.map((groupedItem, index) => (
-                                <div key={index} className="flex justify-between text-xs text-gray-700">
-                                    <span>{groupedItem.categoryName}:</span>
-                                    <span>&#8377;{addThousandsSeparator(groupedItem.totalAmount)}</span>
+                                <div key={index} className="flex justify-between gap-4 text-xs">
+                                    <span className="text-gray-500">{groupedItem.categoryName}</span>
+                                    <span className="text-gray-700 font-medium">&#8377;{addThousandsSeparator(groupedItem.totalAmount)}</span>
                                 </div>
                             ))}
                         </div>
@@ -59,28 +54,29 @@ const CustomLineChart = ({ data }) => {
     };
 
     return (
-        <div className="bg-white">
+        <div className="bg-transparent">
             <ResponsiveContainer width="100%" height={300}>
                 <AreaChart data={data}>
                     <defs>
                         <linearGradient id="expenseGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#875cf5" stopOpacity={0.4} />
-                            <stop offset="95%" stopColor="#875cf5" stopOpacity={0} />
+                            <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.3} />
+                            <stop offset="95%" stopColor="#7c3aed" stopOpacity={0} />
                         </linearGradient>
                     </defs>
 
-                    <CartesianGrid stroke="none" />
-                    <XAxis dataKey="month" tick={{ fontSize: 12, fill: "#555" }} stroke="none" />
-                    <YAxis tick={{ fontSize: 12, fill: "#555" }} stroke="none" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                    <XAxis dataKey="month" tick={{ fontSize: 12, fill: "#94a3b8" }} stroke="none" axisLine={false} tickLine={false} />
+                    <YAxis tick={{ fontSize: 12, fill: "#94a3b8" }} stroke="none" axisLine={false} tickLine={false} />
                     <Tooltip content={<CustomTooltip />} />
 
                     <Area
                         type="monotone"
                         dataKey="totalAmount"
-                        stroke="#875cf5"
+                        stroke="#7c3aed"
                         fill="url(#expenseGradient)"
-                        strokeWidth={3}
-                        dot={{ r: 3, fill: "#ab8df8" }}
+                        strokeWidth={2.5}
+                        dot={{ r: 4, fill: "#7c3aed", strokeWidth: 2, stroke: "#fff" }}
+                        activeDot={{ r: 6, fill: "#7c3aed", strokeWidth: 2, stroke: "#fff" }}
                     />
                 </AreaChart>
             </ResponsiveContainer>

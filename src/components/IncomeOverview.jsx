@@ -16,18 +16,18 @@ const IncomeOverview = ({transactions, onAddIncome}) => {
         <div className="card">
             <div className="flex items-center justify-between">
                 <div>
-                    <h5 className="text-lg">
+                    <h5 className="text-lg font-semibold text-gray-900">
                         Income Overview
                     </h5>
-                    <p className="text-xs text-gray-400 mt-0 5">
-                        Track your earnings over time and analyze your income trends.
+                    <p className="text-xs text-gray-400 mt-0.5">
+                        Track your earnings over time and analyze income trends.
                     </p>
                 </div>
                 <button className="add-btn" onClick={onAddIncome}>
-                    <Plus size={15} className="text-lg" /> Add Income
+                    <Plus size={16} /> Add Income
                 </button>
             </div>
-            <div className="mt-10">
+            <div className="mt-8">
                 <CustomLineChart data={chartData} />
             </div>
         </div>

@@ -1,4 +1,6 @@
-export const BASE_URL = import.meta.env.VITE_API_URL || "https://moneymanager-backend.onrender.com/";
+// For local development use `http://localhost:8080/` by default.
+// To override in dev/prod, set `VITE_API_URL` in your environment.
+export const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/";
 //export const BASE_URL = "http://moneymanager-env.eba-5wjjyxhb.ap-south-1.elasticbeanstalk.com/api/v1.0";
 const CLOUDINARY_CLOUD_NAME = "dhadf5h7j";
 

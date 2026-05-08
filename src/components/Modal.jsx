@@ -6,29 +6,28 @@ const Modal = ({ isOpen, onClose, children, title }) => {
 
     return (
         <div
-            className="fixed inset-0 z-50 flex justify-center items-center w-full h-full overflow-hidden bg-black/40
-      backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex justify-center items-center w-full h-full overflow-hidden bg-black/30 backdrop-blur-sm animate-fade-in"
+            onClick={(e) => e.target === e.currentTarget && onClose()}
         >
-            <div className="relative p-4 w-full max-w-2xl max-h-[90vh]">
-                {/* Modal header */}
-                <div className="relative bg-white rounded-xl shadow-2xl border border-gray-100">
-                    {/* Modal content */}
-                    <div className="flex items-center justify-between p-5 md:p-6 border-b border-gray-100 rounded-t-xl">
-                        <h3 className="text-xl font-semibold text-gray-800">
+            <div className="relative p-4 w-full max-w-2xl max-h-[90vh] animate-fade-in-up">
+                <div className="relative bg-white rounded-2xl shadow-2xl shadow-gray-900/10 border border-gray-100 overflow-hidden">
+                    {/* Modal header */}
+                    <div className="flex items-center justify-between p-5 md:p-6 border-b border-gray-100">
+                        <h3 className="text-lg font-semibold text-gray-900">
                             {title}
                         </h3>
 
                         <button
                             type="button"
-                            className="text-gray-500 bg-gray-50 hover:bg-gray-100 hover:text-gray-700 rounded-lg text-sm w-9 h-9 flex justify-center items-center transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                            className="text-gray-400 bg-gray-50 hover:bg-gray-100 hover:text-gray-600 rounded-xl text-sm w-9 h-9 flex justify-center items-center transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
                             onClick={onClose}
                         >
                             <X className="w-4 h-4" />
                         </button>
                     </div>
 
-                    {/*Modal body*/}
-                    <div className="p-5 md:p-6 text-gray-700">
+                    {/* Modal body */}
+                    <div className="p-5 md:p-6 text-gray-700 overflow-y-auto max-h-[70vh]">
                         {children}
                     </div>
                 </div>

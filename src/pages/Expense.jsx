@@ -180,13 +180,17 @@ const Expense = () => {
     return (
         <Dashboard activeMenu="Expense">
             <div className="my-5 mx-auto">
+                {/* Page Header */}
+                <div className="mb-6">
+                    <h1 className="text-xl font-bold text-gray-900">Expenses</h1>
+                    <p className="text-sm text-gray-400 mt-0.5">Monitor and control your spending habits</p>
+                </div>
+
                 <div className="grid grid-cols-1 gap-6">
-                    <div className="">
-                        <ExpenseOverview
-                            transactions={expenseData}
-                            onExpenseIncome={() => setOpenAddExpenseModal(true)}
-                        />
-                    </div>
+                    <ExpenseOverview
+                        transactions={expenseData}
+                        onExpenseIncome={() => setOpenAddExpenseModal(true)}
+                    />
 
                     <ExpenseList
                         transactions={expenseData}

@@ -104,12 +104,15 @@ const Category = () => {
         <Dashboard activeMenu="Category">
             <div className="my-5 mx-auto">
                 {/* Add button to add category*/}
-                <div className="flex justify-between items-center mb-5">
-                    <h2 className="text-2xl font-semibold">All Categories</h2>
+                <div className="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 className="text-xl font-bold text-gray-900">All Categories</h2>
+                        <p className="text-sm text-gray-400 mt-0.5">Manage your income and expense categories</p>
+                    </div>
                     <button
                         onClick={() => setOpenAddCategoryModal(true)}
-                        className="add-btn flex items-center gap-1">
-                        <Plus size={15} />
+                        className="add-btn">
+                        <Plus size={16} />
                         Add Category
                     </button>
                 </div>

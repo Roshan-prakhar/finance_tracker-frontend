@@ -16,21 +16,20 @@ const ExpenseOverview = ({transactions, onExpenseIncome}) => {
     return (
         <div className="card">
             <div className="flex items-center justify-between">
-                <div className="">
-                    <h5 className="text-lg">Expense Overview</h5>
+                <div>
+                    <h5 className="text-lg font-semibold text-gray-900">Expense Overview</h5>
                     <p className="text-xs text-gray-400 mt-0.5">
-                        Track your spending trends over time and gain insights into where
-                        your money goes.
+                        Track spending trends and gain insights into where your money goes.
                     </p>
                 </div>
 
                 <button className="add-btn" onClick={onExpenseIncome}>
-                    <Plus size={15} className="text-lg" />
+                    <Plus size={16} />
                     Add Expense
                 </button>
             </div>
 
-            <div className="mt-10">
+            <div className="mt-8">
                 <CustomLineChart data={chartData} />
             </div>
         </div>

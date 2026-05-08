@@ -160,11 +160,14 @@ const Income = () => {
     return (
         <Dashboard activeMenu="Income">
             <div className="my-5 mx-auto">
+                {/* Page Header */}
+                <div className="mb-6">
+                    <h1 className="text-xl font-bold text-gray-900">Income</h1>
+                    <p className="text-sm text-gray-400 mt-0.5">Track and manage all your income sources</p>
+                </div>
+
                 <div className="grid grid-cols-1 gap-6">
-                    <div>
-                        {/* overview for income with line char */}
-                        <IncomeOverview transactions={incomeData} onAddIncome={() => setOpenAddIncomeModal(true)} />
-                    </div>
+                    <IncomeOverview transactions={incomeData} onAddIncome={() => setOpenAddIncomeModal(true)} />
 
                     <IncomeList
                         transactions={incomeData}

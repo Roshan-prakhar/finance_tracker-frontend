@@ -27,7 +27,7 @@ const ProfilePhotoSelector = ({image, setImage}) => {
     }
 
     return (
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center mb-4">
             <input type="file"
                 accept="image/*"
                 ref={inputRef}
@@ -36,22 +36,22 @@ const ProfilePhotoSelector = ({image, setImage}) => {
             />
 
             {!image ? (
-                <div className="w-20 h-20 flex items-center justify-center bg-purple-100 rounded-full relative">
-                    <User className="text-purple-500" size={35} />
+                <div className="w-20 h-20 flex items-center justify-center bg-purple-50 rounded-full relative ring-2 ring-purple-100 ring-offset-2">
+                    <User className="text-purple-400" size={32} />
 
                     <button
                         onClick={onChooseFile}
-                        className="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full absolute -bottom-1 -right-1">
-                        <Upload size={15} className="text-purple-500" />
+                        className="w-8 h-8 flex items-center justify-center bg-purple-600 text-white rounded-full absolute -bottom-1 -right-1 shadow-md hover:bg-purple-700 transition-colors">
+                        <Upload size={14} />
                     </button>
                 </div>
             ): (
                 <div className="relative">
-                    <img src={previewUrl} alt="profile photo" className="w-20 h-20 rounded-full object-cover" />
+                    <img src={previewUrl} alt="profile photo" className="w-20 h-20 rounded-full object-cover ring-2 ring-purple-100 ring-offset-2" />
                     <button
                         onClick={handleRemoveImage}
-                        className="w-8 h-8 flex items-center justify-center bg-red-800 text-white rounded-full absolute -bottom-1 -right-1">
-                        <Trash size={15}/>
+                        className="w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-full absolute -bottom-1 -right-1 shadow-md hover:bg-red-600 transition-colors">
+                        <Trash size={14}/>
                     </button>
                 </div>
             )}

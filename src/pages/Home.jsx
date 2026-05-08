@@ -43,63 +43,72 @@ const Home = () => {
     }, []);
 
     return (
-        <div>
-            <Dashboard activeMenu="Dashboard">
-                <div className="my-5 mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {/* Display the cards*/}
-                        <InfoCard
-                            icon={<WalletCards />}
-                            label="Total Balance"
-                            value={addThousandsSeparator(dashboardData?.totalBalance || 0)}
-                            color="bg-purple-800"
-                        />
-                        <InfoCard
-                            icon={<Wallet />}
-                            label="Total Income"
-                            value={addThousandsSeparator(dashboardData?.totalIncome || 0)}
-                            color="bg-green-800"
-                        />
-                        <InfoCard
-                            icon={<Coins />}
-                            label="Total Expense"
-                            value={addThousandsSeparator(dashboardData?.totalExpense || 0)}
-                            color="bg-red-800"
-                        />
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                        {/* Recent transactions */}
-                        <RecentTransactions
-                            transactions={dashboardData?.recentTransactions}
-                            onMore={() => navigate("/expense")}
-                        />
-
-                        {/* finance overview chart */}
-                        <FinanceOverview
-                            totalBalance={dashboardData?.totalBalance || 0}
-                            totalIncome={dashboardData?.totalIncome || 0}
-                            totalExpense={dashboardData?.totalExpense || 0}
-                        />
-
-                        {/* Expense transactions */}
-                        <Transactions
-                            transactions={dashboardData?.recent5Expenses || []}
-                            onMore={() => navigate("/expense")}
-                            type="expense"
-                            title="Recent Expenses"
-                        />
-
-                        {/* Income transactions */}
-                        <Transactions
-                            transactions={dashboardData?.recent5Incomes || []}
-                            onMore={() => navigate("/income")}
-                            type="income"
-                            title="Recent Incomes"
-                        />
-                    </div>
+        <Dashboard activeMenu="Dashboard">
+            <div className="my-5 mx-auto">
+                {/* Page Header */}
+                <div className="mb-6">
+                    <h1 className="text-xl font-bold text-gray-900">Dashboard</h1>
+                    <p className="text-sm text-gray-400 mt-0.5">Overview of your financial activity</p>
                 </div>
-            </Dashboard>
-        </div>
+
+                {loading ? (
+                    <div className="flex flex-col items-center justify-center py-20">
+                        <div className="w-10 h-10 border-2 border-purple-200 border-t-purple-600 rounded-full animate-spin mb-4"></div>
+                        <p className="text-sm text-gray-400">Loading dashboard...</p>
+                    </div>
+                ) : (
+                    <>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+                            <InfoCard
+                                icon={<WalletCards className="w-6 h-6" />}
+                                label="Total Balance"
+                                value={addThousandsSeparator(dashboardData?.totalBalance || 0)}
+                                color="bg-purple-800"
+                            />
+                            <InfoCard
+                                icon={<Wallet className="w-6 h-6" />}
+                                label="Total Income"
+                                value={addThousandsSeparator(dashboardData?.totalIncome || 0)}
+                                color="bg-green-800"
+                            />
+                            <InfoCard
+                                icon={<Coins className="w-6 h-6" />}
+                                label="Total Expense"
+                                value={addThousandsSeparator(dashboardData?.totalExpense || 0)}
+                                color="bg-red-800"
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 mt-6">
+                            <RecentTransactions
+                                transactions={dashboardData?.recentTransactions}
+                                onMore={() => navigate("/expense")}
+                            />
+
+                            <FinanceOverview
+                                totalBalance={dashboardData?.totalBalance || 0}
+                                totalIncome={dashboardData?.totalIncome || 0}
+                                totalExpense={dashboardData?.totalExpense || 0}
+                            />
+
+                            <Transactions
+                                transactions={dashboardData?.recent5Expenses || []}
+                                onMore={() => navigate("/expense")}
+                                type="expense"
+                                title="Recent Expenses"
+                            />
+
+                            <Transactions
+                                transactions={dashboardData?.recent5Incomes || []}
+                                onMore={() => navigate("/income")}
+                                type="income"
+                                title="Recent Incomes"
+                            />
+                        </div>
+                    </>
+                )}
+            </div>
+        </Dashboard>
     )
 }
 
