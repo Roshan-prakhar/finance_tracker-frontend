@@ -1,10 +1,10 @@
-import {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
-import {validateEmail} from "../util/validation.js";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { validateEmail } from "../util/validation.js";
 import axiosConfig from "../util/axiosConfig.jsx";
-import {API_ENDPOINTS, BASE_URL} from "../util/apiEndpoints.js";
+import { API_ENDPOINTS, BASE_URL } from "../util/apiEndpoints.js";
 import toast from "react-hot-toast";
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle, User, Mail, Lock, ArrowRight, Sparkles, Shield, Camera } from "lucide-react";
 import ProfilePhotoSelector from "../components/ProfilePhotoSelector.jsx";
 import uploadProfileImage from "../util/uploadProfileImage.js";
 import Header from "../components/Header.jsx";
@@ -55,27 +55,22 @@ const Signup = () => {
     };
 
     return (
-        <div className="min-h-screen w-full flex flex-col" style={{background: '#f0f4f0'}}>
+        <div className="min-h-screen w-full flex flex-col" style={{ background: '#f0f4f0' }}>
             <Header />
             <div className="flex-grow flex items-center justify-center py-10 px-4 relative overflow-hidden">
-                {/* Decorative blobs */}
                 <div className="absolute top-0 right-0 w-80 h-80 rounded-full opacity-20 translate-x-1/2 -translate-y-1/2"
-                    style={{background: 'radial-gradient(circle, #16a34a, transparent)'}}></div>
+                    style={{ background: 'radial-gradient(circle, #16a34a, transparent)' }}></div>
                 <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full opacity-10 -translate-x-1/2 translate-y-1/2"
-                    style={{background: 'radial-gradient(circle, #15803d, transparent)'}}></div>
+                    style={{ background: 'radial-gradient(circle, #15803d, transparent)' }}></div>
 
                 <div className="relative z-10 w-full max-w-lg">
-                    <div className="bg-white rounded-3xl shadow-2xl overflow-hidden" style={{boxShadow: '0 20px 60px rgba(22,163,74,0.12)'}}>
-                        {/* Green top bar */}
-                        <div className="h-1.5 w-full" style={{background: 'linear-gradient(90deg, #16a34a, #22c55e, #16a34a)'}}></div>
+                    <div className="bg-white rounded-3xl shadow-2xl overflow-hidden" style={{ boxShadow: '0 20px 60px rgba(22,163,74,0.12)' }}>
+                        <div className="h-1.5 w-full" style={{ background: 'linear-gradient(90deg, #16a34a, #22c55e, #16a34a)' }}></div>
 
                         <div className="p-8 md:p-10 max-h-[85vh] overflow-y-auto">
-                            {/* Logo mark */}
                             <div className="flex items-center gap-3 mb-8">
-                                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{background: '#16a34a'}}>
-                                    <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
+                                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: '#16a34a' }}>
+                                    <Sparkles className="w-5 h-5 text-white" />
                                 </div>
                                 <span className="text-lg font-bold text-gray-900 tracking-tight">FinTrack</span>
                             </div>
@@ -84,7 +79,6 @@ const Signup = () => {
                             <p className="text-sm text-gray-400 mb-8">Start your journey to better financial health</p>
 
                             <form onSubmit={handleSubmit} className="space-y-5">
-                                {/* Profile Photo */}
                                 <div className="flex justify-center mb-2">
                                     <ProfilePhotoSelector image={profilePhoto} setImage={setProfilePhoto} />
                                 </div>
@@ -92,41 +86,48 @@ const Signup = () => {
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Full Name</label>
-                                        <input
-                                            value={fullName}
-                                            onChange={(e) => setFullName(e.target.value)}
-                                            placeholder="John Doe"
-                                            type="text"
-                                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 bg-gray-50 focus:outline-none focus:border-green-500 focus:ring-2 focus:bg-white transition-all"
-                                        />
+                                        <div className="relative">
+                                            <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                                            <input
+                                                value={fullName}
+                                                onChange={(e) => setFullName(e.target.value)}
+                                                placeholder="John Doe"
+                                                type="text"
+                                                className="w-full border border-gray-200 rounded-xl pl-10 pr-4 py-3 text-sm text-gray-800 bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 focus:bg-white transition-all"
+                                            />
+                                        </div>
                                     </div>
                                     <div>
                                         <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Email Address</label>
-                                        <input
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            placeholder="name@example.com"
-                                            type="text"
-                                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 bg-gray-50 focus:outline-none focus:border-green-500 focus:ring-2 focus:bg-white transition-all"
-                                        />
+                                        <div className="relative">
+                                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                                            <input
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                placeholder="name@example.com"
+                                                type="text"
+                                                className="w-full border border-gray-200 rounded-xl pl-10 pr-4 py-3 text-sm text-gray-800 bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 focus:bg-white transition-all"
+                                            />
+                                        </div>
                                     </div>
                                     <div className="col-span-1 sm:col-span-2">
                                         <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Password</label>
-                                        <input
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            placeholder="Create a strong password"
-                                            type="password"
-                                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 bg-gray-50 focus:outline-none focus:border-green-500 focus:ring-2 focus:bg-white transition-all"
-                                        />
+                                        <div className="relative">
+                                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                                            <input
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                placeholder="Create a strong password"
+                                                type="password"
+                                                className="w-full border border-gray-200 rounded-xl pl-10 pr-4 py-3 text-sm text-gray-800 bg-gray-50 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 focus:bg-white transition-all"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
                                 {error && (
                                     <div className="flex items-center gap-2 text-red-700 text-sm bg-red-50 border border-red-100 p-3 rounded-xl">
-                                        <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                        </svg>
+                                        <Shield className="w-4 h-4 flex-shrink-0" />
                                         {error}
                                     </div>
                                 )}
@@ -134,12 +135,14 @@ const Signup = () => {
                                 <button
                                     disabled={isLoading}
                                     className={`w-full py-3.5 text-sm font-semibold text-white rounded-xl flex items-center justify-center gap-2 transition-all duration-200 ${isLoading ? 'opacity-60 cursor-not-allowed' : 'hover:opacity-90 active:scale-95'}`}
-                                    style={{background: '#16a34a'}}
+                                    style={{ background: '#16a34a' }}
                                     type="submit"
                                 >
                                     {isLoading ? (
                                         <><LoaderCircle className="animate-spin w-4 h-4" /> Creating Account...</>
-                                    ) : "Create Account"}
+                                    ) : (
+                                        <>Create Account <ArrowRight className="w-4 h-4" /></>
+                                    )}
                                 </button>
 
                                 <div className="flex items-center gap-3 py-1">
@@ -148,7 +151,6 @@ const Signup = () => {
                                     <div className="flex-1 h-px bg-gray-100"></div>
                                 </div>
 
-                                {/* Google OAuth Button */}
                                 <button
                                     type="button"
                                     onClick={handleGoogleLogin}
@@ -171,7 +173,7 @@ const Signup = () => {
 
                                 <p className="text-sm text-gray-500 text-center">
                                     Already have an account?{' '}
-                                    <Link to="/login" className="font-semibold transition-colors" style={{color: '#16a34a'}}>
+                                    <Link to="/login" className="font-semibold transition-colors" style={{ color: '#16a34a' }}>
                                         Sign in
                                     </Link>
                                 </p>

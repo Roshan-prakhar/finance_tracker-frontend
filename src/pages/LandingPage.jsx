@@ -5,7 +5,7 @@ import FeaturesSection from "../components/FeaturesSection.jsx";
 import StatsSection from "../components/StatsSection.jsx";
 import Footer from "../components/Footer.jsx";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, ArrowDownRight, Activity, Shield, Globe, Zap, Github, Linkedin, Mail, Phone, MapPin, BookOpen, Award, Calendar, Users, Clock, ChevronRight, WalletCards, TrendingUp, BarChart3 } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, Activity, Shield, Globe, Zap, Github, Linkedin, Mail, Phone, MapPin, BookOpen, Award, Calendar, Users, Clock, ChevronRight, WalletCards, TrendingUp, BarChart3, LayoutDashboard, PieChart, Settings, HelpCircle, LogIn, UserPlus, Sparkles, Target, Download } from "lucide-react";
 
 /* ─── Stock Ticker Data ─── */
 const stockData = [
@@ -49,6 +49,74 @@ const StockTicker = () => (
     </div>
 );
 
+/* ─── Enhanced Header with Intra-Site Navigation ─── */
+const EnhancedHeader = () => {
+    const navItems = [
+        { label: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
+        { label: 'Analytics', icon: PieChart, href: '/analytics' },
+        { label: 'Features', icon: Zap, href: '#features' },
+        { label: 'Pricing', icon: WalletCards, href: '#pricing' },
+        { label: 'Support', icon: HelpCircle, href: '/support' },
+    ];
+
+    return (
+        <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                <div className="flex items-center justify-between h-16">
+                    <Link to="/" className="flex items-center gap-2.5 group">
+                        <div className="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-600/20 group-hover:shadow-emerald-600/30 transition-shadow">
+                            <WalletCards className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="hidden sm:block">
+                            <span className="text-lg font-bold text-gray-900 tracking-tight">FinTrack</span>
+                            <span className="text-emerald-600 font-bold">Pro</span>
+                        </div>
+                    </Link>
+
+                    <nav className="hidden lg:flex items-center gap-1">
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.label}
+                                to={item.href}
+                                className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-200 group"
+                            >
+                                <item.icon size={16} className="text-gray-400 group-hover:text-emerald-500 transition-colors" />
+                                {item.label}
+                            </Link>
+                        ))}
+                    </nav>
+
+                    <button className="lg:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100">
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+
+                    <div className="hidden sm:flex items-center gap-2">
+                        <Link to="/login" className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-gray-700 rounded-xl hover:bg-gray-50 border border-transparent hover:border-gray-200 transition-all duration-200">
+                            <LogIn size={16} />
+                            Sign In
+                        </Link>
+                        <Link to="/signup" className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white rounded-xl bg-emerald-600 hover:bg-emerald-700 transition-all duration-200 shadow-md shadow-emerald-600/20">
+                            <UserPlus size={16} />
+                            Get Started
+                        </Link>
+                    </div>
+                </div>
+
+                <div className="lg:hidden pb-3 flex gap-2 overflow-x-auto scrollbar-hide">
+                    {navItems.map((item) => (
+                        <Link key={item.label} to={item.href} className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium text-gray-600 hover:text-emerald-700 hover:bg-emerald-50/80 transition-all duration-200 whitespace-nowrap">
+                            <item.icon size={14} className="text-gray-400" />
+                            {item.label}
+                        </Link>
+                    ))}
+                </div>
+            </div>
+        </header>
+    );
+};
+
 /* ─── Premium Glassmorphism ATM Card ─── */
 const GlassCard = ({ type, balance, holder, number, expiry, gradient, accentColor, top, left, rotate, scale }) => {
     const isDebit = type === 'debit';
@@ -63,11 +131,9 @@ const GlassCard = ({ type, balance, holder, number, expiry, gradient, accentColo
                 zIndex: 20
             }}>
             
-            {/* Animated orbs */}
             <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-20 animate-pulse"
                 style={{background: `radial-gradient(circle, ${accentColor}, transparent)`, filter: 'blur(30px)'}}></div>
             
-            {/* Shine effect */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"
                 style={{
                     background: 'linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%)',
@@ -75,13 +141,11 @@ const GlassCard = ({ type, balance, holder, number, expiry, gradient, accentColo
                     animation: 'shine 2.5s ease-in-out infinite',
                 }}></div>
 
-            {/* Glass edge */}
             <div className="absolute inset-0 rounded-2xl pointer-events-none"
                 style={{
                     background: 'linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.08) 100%)',
                 }}></div>
 
-            {/* EMV Chip */}
             <div className="w-10 h-7 rounded-md opacity-80 mb-4"
                 style={{
                     background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)',
@@ -121,7 +185,6 @@ const GlassCard = ({ type, balance, holder, number, expiry, gradient, accentColo
                     </div>
                 </div>
 
-                {/* Card number dots */}
                 <div className="flex items-center gap-2 mt-3">
                     {[...Array(3)].map((_, i) => (
                         <div key={i} className="flex gap-0.5">
@@ -133,7 +196,6 @@ const GlassCard = ({ type, balance, holder, number, expiry, gradient, accentColo
                     <span className="text-[10px] font-mono text-white/60 ml-1">{number}</span>
                 </div>
 
-                {/* Network logo */}
                 <div className="absolute bottom-4 right-4 opacity-70">
                     {isDebit ? (
                         <div className="flex items-center gap-0.5">
@@ -152,17 +214,103 @@ const GlassCard = ({ type, balance, holder, number, expiry, gradient, accentColo
     );
 };
 
-/* ─── Inline sub-components (override / wrap existing ones with Finma styling) ─── */
+/* ─── Modern Professional Footer ─── */
+const ModernFooter = () => {
+    const currentYear = new Date().getFullYear();
+    
+    return (
+        <footer className="bg-slate-900 border-t border-slate-800">
+            <div className="max-w-7xl mx-auto px-6 py-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="lg:col-span-2">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-600/20">
+                                <WalletCards className="w-5 h-5 text-white" />
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-bold text-white">FinTrack Pro</h3>
+                                <p className="text-xs text-slate-400 font-medium">Personal Finance Management</p>
+                            </div>
+                        </div>
+                        <p className="text-sm text-slate-400 leading-relaxed mb-4 max-w-md">
+                            Empowering individuals to take control of their financial future through intelligent tracking, 
+                            insightful analytics, and seamless money management.
+                        </p>
+                        <div className="flex items-center gap-3">
+                            <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20">React 18</span>
+                            <span className="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold border border-blue-500/20">Tailwind CSS</span>
+                            <span className="px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-bold border border-purple-500/20">Node.js</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Product</h4>
+                        <ul className="space-y-2.5 text-sm text-slate-400">
+                            <li><Link to="/dashboard" className="hover:text-emerald-400 transition-colors">Dashboard</Link></li>
+                            <li><Link to="/income" className="hover:text-emerald-400 transition-colors">Income</Link></li>
+                            <li><Link to="/expense" className="hover:text-emerald-400 transition-colors">Expenses</Link></li>
+                            <li><Link to="/category" className="hover:text-emerald-400 transition-colors">Categories</Link></li>
+                            <li><Link to="/filters" className="hover:text-emerald-400 transition-colors">Filters</Link></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Connect</h4>
+                        <div className="space-y-3">
+                            <a href="mailto:roshanprakhar@gmail.com" className="flex items-center gap-2 text-sm text-slate-400 hover:text-emerald-400 transition-colors group">
+                                <Mail size={14} className="text-slate-500 group-hover:text-emerald-400" />
+                                roshanprakhar@gmail.com
+                            </a>
+                            <a href="tel:+919508849293" className="flex items-center gap-2 text-sm text-slate-400 hover:text-emerald-400 transition-colors group">
+                                <Phone size={14} className="text-slate-500 group-hover:text-emerald-400" />
+                                +91-9508849293
+                            </a>
+                            <div className="flex items-center gap-2 text-sm text-slate-400">
+                                <MapPin size={14} className="text-slate-500" />
+                                India
+                            </div>
+                            <div className="flex items-center gap-2 pt-2">
+                                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition-all duration-300 text-slate-400">
+                                    <Github size={16} />
+                                </a>
+                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-blue-600 hover:text-white flex items-center justify-center transition-all duration-300 text-slate-400">
+                                    <Linkedin size={16} />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="border-t border-slate-800 bg-slate-950">
+                <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                        <Shield size={12} className="text-emerald-500" />
+                        <span>© {currentYear} FinTrack Pro. All rights reserved.</span>
+                    </div>
+                    <div className="flex items-center gap-4 text-xs text-slate-500">
+                        <span className="flex items-center gap-1">
+                            <Sparkles size={12} className="text-amber-500" />
+                            Crafted with precision
+                        </span>
+                        <span className="flex items-center gap-1">
+                            <Globe size={12} className="text-blue-500" />
+                            v1.0.0
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    );
+};
 
 const FinmaHero = () => (
     <section className="relative overflow-hidden pt-16 pb-28 px-6" style={{ background: '#f0f4f0' }}>
-        {/* Background shapes */}
         <div className="absolute top-0 right-0 w-[520px] h-[520px] rounded-full opacity-10 translate-x-1/3 -translate-y-1/4 pointer-events-none"
             style={{ background: 'radial-gradient(circle, #16a34a, transparent)' }}></div>
         <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full opacity-10 -translate-x-1/3 translate-y-1/4 pointer-events-none"
             style={{ background: 'radial-gradient(circle, #15803d, transparent)' }}></div>
 
-        {/* Premium Glassmorphism ATM Cards - Floating */}
         <GlassCard 
             type="debit"
             balance="12,832.08"
@@ -190,7 +338,6 @@ const FinmaHero = () => (
             scale="0.9"
         />
 
-        {/* Quick Stats Card */}
         <div className="hidden lg:block absolute right-36 top-52 w-44 rounded-2xl p-3.5 shadow-xl -rotate-2 z-10 bg-white/80 backdrop-blur-sm border border-white/50">
             <p className="text-xs text-gray-400 mb-2 font-medium">Quick Stats</p>
             <div className="flex items-center justify-between mb-1.5">
@@ -208,7 +355,6 @@ const FinmaHero = () => (
         </div>
 
         <div className="max-w-3xl mx-auto text-center relative z-20">
-            {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-6 border"
                 style={{ background: '#f0fdf4', borderColor: '#bbf7d0', color: '#16a34a' }}>
                 <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#16a34a' }}></div>
@@ -230,22 +376,15 @@ const FinmaHero = () => (
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link
-                    to="/signup"
-                    className="px-7 py-3.5 text-sm font-semibold text-white rounded-xl transition-all duration-200 hover:opacity-90 active:scale-95 shadow-lg"
-                    style={{ background: '#16a34a', boxShadow: '0 8px 24px rgba(22,163,74,0.35)' }}
-                >
+                <Link to="/signup" className="px-7 py-3.5 text-sm font-semibold text-white rounded-xl transition-all duration-200 hover:opacity-90 active:scale-95 shadow-lg"
+                    style={{ background: '#16a34a', boxShadow: '0 8px 24px rgba(22,163,74,0.35)' }}>
                     Get Started Free
                 </Link>
-                <Link
-                    to="/login"
-                    className="px-7 py-3.5 text-sm font-semibold text-gray-700 rounded-xl bg-white border border-gray-200 hover:border-gray-300 transition-all duration-200 shadow-sm"
-                >
+                <Link to="/login" className="px-7 py-3.5 text-sm font-semibold text-gray-700 rounded-xl bg-white border border-gray-200 hover:border-gray-300 transition-all duration-200 shadow-sm">
                     Sign In →
                 </Link>
             </div>
 
-            {/* Trust badges */}
             <div className="flex items-center justify-center gap-6 mt-10 text-xs text-gray-400">
                 <div className="flex items-center gap-1.5">
                     <Shield size={14} className="text-emerald-600" />
@@ -270,81 +409,30 @@ const FinmaHero = () => (
 
 const FinmaFeatures = () => {
     const features = [
-        {
-            icon: <BarChart3 size={24} className="text-white" />,
-            bg: '#16a34a',
-            title: 'Smart Analytics',
-            desc: 'Visualize your spending patterns with beautiful charts and real-time insights.',
-        },
-        {
-            icon: <TrendingUp size={24} className="text-white" />,
-            bg: '#1d4ed8',
-            title: 'Income Tracking',
-            desc: 'Log every income source and watch your earnings grow over time.',
-        },
-        {
-            icon: (
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
-            ),
-            bg: '#dc2626',
-            title: 'Expense Control',
-            desc: 'Categorize expenses and set limits to keep your spending in check.',
-        },
-        {
-            icon: (
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z" />
-                </svg>
-            ),
-            bg: '#7c3aed',
-            title: 'Advanced Filters',
-            desc: 'Search and filter transactions by date, type, category, or keyword.',
-        },
-        {
-            icon: (
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-            ),
-            bg: '#0891b2',
-            title: 'Export Reports',
-            desc: 'Download your financial data as Excel files or get reports via email.',
-        },
-        {
-            icon: (
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                </svg>
-            ),
-            bg: '#d97706',
-            title: 'Custom Categories',
-            desc: 'Create and manage your own income and expense categories.',
-        },
+        { icon: <BarChart3 size={24} className="text-white" />, bg: '#16a34a', title: 'Smart Analytics', desc: 'Visualize your spending patterns with beautiful charts and real-time insights.' },
+        { icon: <TrendingUp size={24} className="text-white" />, bg: '#1d4ed8', title: 'Income Tracking', desc: 'Log every income source and watch your earnings grow over time.' },
+        { icon: <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>, bg: '#dc2626', title: 'Expense Control', desc: 'Categorize expenses and set limits to keep your spending in check.' },
+        { icon: <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z" /></svg>, bg: '#7c3aed', title: 'Advanced Filters', desc: 'Search and filter transactions by date, type, category, or keyword.' },
+        { icon: <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>, bg: '#0891b2', title: 'Export Reports', desc: 'Download your financial data as Excel files or get reports via email.' },
+        { icon: <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>, bg: '#d97706', title: 'Custom Categories', desc: 'Create and manage your own income and expense categories.' },
     ];
 
     return (
-        <section className="py-20 px-6 bg-white">
+        <section id="features" className="py-20 px-6 bg-white">
             <div className="max-w-5xl mx-auto">
                 <div className="text-center mb-14">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-4 border"
                         style={{ background: '#f0fdf4', borderColor: '#bbf7d0', color: '#16a34a' }}>
                         Everything you need
                     </div>
-                    <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-                        Powerful features, simple interface
-                    </h2>
-                    <p className="text-gray-500 max-w-md mx-auto text-base">
-                        All the tools you need to master your personal finances in one place.
-                    </p>
+                    <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Powerful features, simple interface</h2>
+                    <p className="text-gray-500 max-w-md mx-auto text-base">All the tools you need to master your personal finances in one place.</p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {features.map((f, i) => (
                         <div key={i} className="rounded-2xl p-5 border border-gray-100 hover:border-gray-200 hover:shadow-md transition-all duration-200 group">
-                            <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 transition-transform duration-200 group-hover:scale-105"
-                                style={{ background: f.bg }}>
+                            <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 transition-transform duration-200 group-hover:scale-105" style={{ background: f.bg }}>
                                 {f.icon}
                             </div>
                             <h3 className="text-sm font-bold text-gray-900 mb-1.5">{f.title}</h3>
@@ -366,12 +454,7 @@ const FinmaStats = () => (
                     style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #16a34a, transparent 60%), radial-gradient(circle at 80% 20%, #22c55e, transparent 50%)' }}></div>
 
                 <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                    {[
-                        { value: '10K+', label: 'Active Users' },
-                        { value: '$2M+', label: 'Tracked Monthly' },
-                        { value: '99.9%', label: 'Uptime' },
-                        { value: '4.9★', label: 'User Rating' },
-                    ].map((stat, i) => (
+                    {[{ value: '10K+', label: 'Active Users' }, { value: '$2M+', label: 'Tracked Monthly' }, { value: '99.9%', label: 'Uptime' }, { value: '4.9★', label: 'User Rating' }].map((stat, i) => (
                         <div key={i}>
                             <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
                             <p className="text-sm text-gray-400">{stat.label}</p>
@@ -384,15 +467,12 @@ const FinmaStats = () => (
 );
 
 const FinmaCTA = () => (
-    <section className="py-20 px-6 bg-white">
+    <section id="pricing" className="py-20 px-6 bg-white">
         <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to take control?</h2>
             <p className="text-gray-400 mb-8">Join thousands of users already managing their finances smarter.</p>
-            <Link
-                to="/signup"
-                className="inline-flex items-center gap-2 px-8 py-4 text-sm font-semibold text-white rounded-xl transition-all duration-200 hover:opacity-90 active:scale-95"
-                style={{ background: '#16a34a', boxShadow: '0 8px 24px rgba(22,163,74,0.35)' }}
-            >
+            <Link to="/signup" className="inline-flex items-center gap-2 px-8 py-4 text-sm font-semibold text-white rounded-xl transition-all duration-200 hover:opacity-90 active:scale-95"
+                style={{ background: '#16a34a', boxShadow: '0 8px 24px rgba(22,163,74,0.35)' }}>
                 Start for Free
                 <ChevronRight size={18} />
             </Link>
@@ -400,186 +480,25 @@ const FinmaCTA = () => (
     </section>
 );
 
-/* ─── Professional College Project Footer ─── */
-const CollegeFooter = () => {
-    const currentYear = new Date().getFullYear();
-    
-    return (
-        <footer className="bg-slate-50 border-t border-slate-200">
-            {/* Main Footer Content */}
-            <div className="max-w-7xl mx-auto px-6 py-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    
-                    {/* Project Info */}
-                    <div className="lg:col-span-2">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-600/20">
-                                <WalletCards className="w-5 h-5 text-white" />
-                            </div>
-                            <div>
-                                <h3 className="text-lg font-bold text-slate-900">FinTrack Pro</h3>
-                                <p className="text-xs text-slate-500 font-medium">Personal Finance Management System</p>
-                            </div>
-                        </div>
-                        <p className="text-sm text-slate-600 leading-relaxed mb-4 max-w-md">
-                            A comprehensive personal finance dashboard built as part of the <span className="font-semibold text-slate-800">B.Tech Computer Science</span> curriculum. 
-                            Features real-time transaction tracking, budget analytics, and financial visualization.
-                        </p>
-                        <div className="flex items-center gap-3 flex-wrap">
-                            <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold border border-emerald-200">
-                                React 18
-                            </span>
-                            <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold border border-blue-200">
-                                Tailwind CSS
-                            </span>
-                            <span className="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-bold border border-purple-200">
-                                Node.js
-                            </span>
-                            <span className="px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-bold border border-orange-200">
-                                MongoDB
-                            </span>
-                        </div>
-                    </div>
-
-                    {/* Academic Details */}
-                    <div>
-                        <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
-                            <BookOpen size={14} className="text-emerald-600" />
-                            Academic Info
-                        </h4>
-                        <ul className="space-y-3 text-sm text-slate-600">
-                            <li className="flex items-start gap-2">
-                                <Award size={14} className="text-amber-500 mt-0.5 shrink-0" />
-                                <span>Major Project - 8th Semester</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <Users size={14} className="text-blue-500 mt-0.5 shrink-0" />
-                                <span>Supervised by Prof. [Guide Name]</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <Calendar size={14} className="text-rose-500 mt-0.5 shrink-0" />
-                                <span>Session: {currentYear-1}-{currentYear}</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <Clock size={14} className="text-purple-500 mt-0.5 shrink-0" />
-                                <span>Duration: Jan 2026 - May 2026</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {/* Developer Contact */}
-                    <div>
-                        <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
-                            <Users size={14} className="text-emerald-600" />
-                            Developer
-                        </h4>
-                        <div className="space-y-3">
-                            <div className="flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-100 shadow-sm">
-                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white font-bold text-sm">
-                                    RP
-                                </div>
-                                <div>
-                                    <p className="text-sm font-bold text-slate-900">Roshan Prakhar</p>
-                                    <p className="text-xs text-slate-500">Full Stack Developer</p>
-                                </div>
-                            </div>
-                            
-                            <div className="space-y-2">
-                                <a href="mailto:roshanprakhar@gmail.com" className="flex items-center gap-2 text-sm text-slate-600 hover:text-emerald-600 transition-colors group">
-                                    <Mail size={14} className="text-slate-400 group-hover:text-emerald-500" />
-                                    roshanprakhar@gmail.com
-                                </a>
-                                <a href="tel:+919508849293" className="flex items-center gap-2 text-sm text-slate-600 hover:text-emerald-600 transition-colors group">
-                                    <Phone size={14} className="text-slate-400 group-hover:text-emerald-500" />
-                                    +91-9508849293
-                                </a>
-                                <div className="flex items-center gap-2 text-sm text-slate-600">
-                                    <MapPin size={14} className="text-slate-400" />
-                                    <span>India</span>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-2 pt-2">
-                                <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
-                                    className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-800 hover:text-white flex items-center justify-center transition-all duration-300 text-slate-600">
-                                    <Github size={16} />
-                                </a>
-                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-                                    className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-blue-600 hover:text-white flex items-center justify-center transition-all duration-300 text-slate-600">
-                                    <Linkedin size={16} />
-                                </a>
-                                <a href="mailto:roshanprakhar@gmail.com"
-                                    className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-rose-500 hover:text-white flex items-center justify-center transition-all duration-300 text-slate-600">
-                                    <Mail size={16} />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Bottom Bar */}
-            <div className="border-t border-slate-200 bg-white">
-                <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-2 text-xs text-slate-500">
-                        <Shield size={12} className="text-emerald-500" />
-                        <span>© {currentYear} FinTrack Pro. All rights reserved.</span>
-                        <span className="hidden sm:inline text-slate-300">|</span>
-                        <span className="hidden sm:inline">Built for educational purposes</span>
-                    </div>
-                    
-                    <div className="flex items-center gap-4 text-xs text-slate-500">
-                        <span className="flex items-center gap-1">
-                            <Zap size={12} className="text-amber-500" />
-                            Powered by React & Tailwind
-                        </span>
-                        <span className="flex items-center gap-1">
-                            <Globe size={12} className="text-blue-500" />
-                            v1.0.0
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    );
-};
-
-/* ─── Main LandingPage ─── */
 const LandingPage = () => {
     return (
         <div className="bg-white text-gray-800 min-h-screen">
-            {/* Inject marquee + shine animations */}
             <style>{`
-                @keyframes marquee {
-                    0% { transform: translateX(0); }
-                    100% { transform: translateX(-33.33%); }
-                }
-                .animate-marquee {
-                    animation: marquee 25s linear infinite;
-                }
-                .animate-marquee:hover {
-                    animation-play-state: paused;
-                }
-                @keyframes shine {
-                    0% { background-position: 200% center; }
-                    100% { background-position: -200% center; }
-                }
+                @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-33.33%); } }
+                .animate-marquee { animation: marquee 25s linear infinite; }
+                .animate-marquee:hover { animation-play-state: paused; }
+                @keyframes shine { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
             `}</style>
 
-            <Header />
-            
-            {/* Stock Ticker - Below Header */}
+            <EnhancedHeader />
             <StockTicker />
-            
             <main>
                 <FinmaHero />
                 <FinmaFeatures />
                 <FinmaStats />
                 <FinmaCTA />
             </main>
-            
-            {/* Replace default Footer with CollegeFooter */}
-            <CollegeFooter />
+            <ModernFooter />
         </div>
     );
 };

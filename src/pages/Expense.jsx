@@ -10,153 +10,82 @@ import ExpenseList from "../components/ExpenseList.jsx";
 import Modal from "../components/Modal.jsx";
 import AddExpenseForm from "../components/AddExpenseForm.jsx";
 import DeleteAlert from "../components/DeleteAlert.jsx";
-import {Coins, Plus} from "lucide-react";
+import { Plus, TrendingDown, Receipt, Wallet, ArrowUpRight } from "lucide-react";
 
 const Expense = () => {
     useUser();
     const navigate = useNavigate();
     const [expenseData, setExpenseData] = useState([]);
-    const [categories, setCategories] = useState([]); // New state for expense categories
+    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [openAddExpenseModal, setOpenAddExpenseModal] = useState(false);
-    const [openDeleteAlert, setOpenDeleteAlert] = useState({
-        show: false,
-        data: null,
-    });
+    const [openDeleteAlert, setOpenDeleteAlert] = useState({ show: false, data: null });
 
-    // Get All Expense Details
     const fetchExpenseDetails = async () => {
-        if (loading) return; // Prevent multiple fetches if already loading
-
+        if (loading) return;
         setLoading(true);
-
         try {
-            const response = await axiosConfig.get(
-                `${API_ENDPOINTS.GET_ALL_EXPENSE}`
-            );
-
-            if (response.data) {
-                setExpenseData(response.data);
-            }
+            const response = await axiosConfig.get(`${API_ENDPOINTS.GET_ALL_EXPENSE}`);
+            if (response.data) setExpenseData(response.data);
         } catch (error) {
-            console.error("Failed to fetch expense details:", error);
             toast.error("Failed to fetch expense details.");
         } finally {
             setLoading(false);
         }
     };
 
-    // New: Fetch Expense Categories
     const fetchExpenseCategories = async () => {
         try {
-            const response = await axiosConfig.get(
-                API_ENDPOINTS.CATEGORY_BY_TYPE("expense") // Fetch categories of type 'expense'
-            );
-            if (response.data) {
-                setCategories(response.data);
-            }
+            const response = await axiosConfig.get(API_ENDPOINTS.CATEGORY_BY_TYPE("expense"));
+            if (response.data) setCategories(response.data);
         } catch (error) {
-            console.error("Failed to fetch expense categories:", error);
             toast.error("Failed to fetch expense categories.");
         }
     };
 
-
-    // Handle Add Expense
     const handleAddExpense = async (expense) => {
-        const { name, categoryId, amount, date, icon } = expense; // Changed 'category' to 'categoryId'
-
-        if (!name.trim()) {
-            toast.error("Name is required.");
-            return;
-        }
-
-        // Validation Checks
-        if (!categoryId) { // Validate categoryId now
-            toast.error("Category is required.");
-            return;
-        }
-
-        if (!amount || isNaN(amount) || Number(amount) <= 0) {
-            toast.error("Amount should be a valid number greater than 0.");
-            return;
-        }
-
-        if (!date) {
-            toast.error("Date is required.");
-            return;
-        }
-
+        const { name, categoryId, amount, date, icon } = expense;
+        if (!name.trim()) { toast.error("Name is required."); return; }
+        if (!categoryId) { toast.error("Category is required."); return; }
+        if (!amount || isNaN(amount) || Number(amount) <= 0) { toast.error("Amount should be a valid number greater than 0."); return; }
+        if (!date) { toast.error("Date is required."); return; }
         const today = new Date().toISOString().split('T')[0];
-        if (date > today) {
-            toast.error('Date cannot be in the future');
-            return;
-        }
-
+        if (date > today) { toast.error('Date cannot be in the future'); return; }
         try {
-            await axiosConfig.post(API_ENDPOINTS.ADD_EXPENSE, {
-                name,
-                categoryId, // Pass categoryId to the API
-                amount: Number(amount), // Ensure amount is a number
-                date,
-                icon,
-            });
-
+            await axiosConfig.post(API_ENDPOINTS.ADD_EXPENSE, { name, categoryId, amount: Number(amount), date, icon });
             setOpenAddExpenseModal(false);
             toast.success("Expense added successfully");
-            fetchExpenseDetails(); // Refresh expense list
+            fetchExpenseDetails();
             fetchExpenseCategories();
         } catch (error) {
-            console.error(
-                "Error adding expense:",
-                error.response?.data?.message || error.message
-            );
             toast.error(error.response?.data?.message || "Failed to add expense.");
         }
     };
 
-    // Delete Expense
     const deleteExpense = async (id) => {
         try {
             await axiosConfig.delete(API_ENDPOINTS.DELETE_EXPENSE(id));
-
             setOpenDeleteAlert({ show: false, data: null });
             toast.success("Expense details deleted successfully");
             fetchExpenseDetails();
         } catch (error) {
-            console.error(
-                "Error deleting expense:",
-                error.response?.data?.message || error.message
-            );
             toast.error(error.response?.data?.message || "Failed to delete expense.");
         }
     };
 
     const handleDownloadExpenseDetails = async () => {
         try {
-            const response = await axiosConfig.get(
-                API_ENDPOINTS.EXPENSE_EXCEL_DOWNLOAD, // Ensure this path is correct, e.g., "/download/income"
-                {
-                    responseType: "blob", // Important: tells Axios to expect binary data
-                }
-            );
-
-            // Extract filename from Content-Disposition header, or use a default
-            let filename = "expense_details.xlsx"; // Default filename
-
-            // Create a URL for the blob
+            const response = await axiosConfig.get(API_ENDPOINTS.EXPENSE_EXCEL_DOWNLOAD, { responseType: "blob" });
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement("a");
             link.href = url;
-            link.setAttribute("download", filename); // Use the extracted or default filename
+            link.setAttribute("download", "expense_details.xlsx");
             document.body.appendChild(link);
-            link.click(); // Programmatically click the link to trigger download
-            link.parentNode.removeChild(link); // Clean up the link element
-            window.URL.revokeObjectURL(url); // Release the object URL
-
+            link.click();
+            link.parentNode.removeChild(link);
+            window.URL.revokeObjectURL(url);
             toast.success("Expense details downloaded successfully!");
         } catch (error) {
-            console.error("Error downloading expense details:", error);
             toast.error("Failed to download expense details. Please try again.");
         }
     };
@@ -164,83 +93,92 @@ const Expense = () => {
     const handleEmailExpenseDetails = async () => {
         try {
             const response = await axiosConfig.get(API_ENDPOINTS.EMAIL_EXPENSE);
-            if(response.status === 200) {
-                toast.success("Email sent");
-            }
-        }catch (e) {
-            console.error("Error emailing expense details:", e);
+            if (response.status === 200) toast.success("Email sent");
+        } catch (e) {
             toast.error("Failed to email expense details. Please try again.");
         }
-    }
+    };
 
     useEffect(() => {
         fetchExpenseDetails();
-        fetchExpenseCategories(); // Fetch categories when component mounts
+        fetchExpenseCategories();
     }, []);
+
+    const totalExpense = expenseData.reduce((sum, t) => sum + (t.amount || 0), 0);
+    const highestExpense = expenseData.length > 0 ? Math.max(...expenseData.map(t => t.amount || 0)) : 0;
 
     return (
         <Dashboard activeMenu="Expense">
-            <div className="max-w-full mx-auto">
-                {/* Page Header Card */}
-                <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 mb-5">
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-500/20">
-                                <Coins className="w-6 h-6 text-white" />
+            <div className="my-5 mx-auto max-w-7xl px-4 sm:px-6">
+                <div className="mb-6 flex items-start justify-between">
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-900">Expenses</h1>
+                        <p className="text-sm text-gray-400 mt-1">Monitor and control your spending habits</p>
+                    </div>
+                    <button onClick={() => setOpenAddExpenseModal(true)}
+                        className="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl transition-all duration-200 hover:opacity-90 active:scale-95 shadow-md"
+                        style={{ background: '#dc2626', boxShadow: '0 4px 14px rgba(220,38,38,0.25)' }}>
+                        <Plus size={16} />
+                        Add Expense
+                    </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <div className="rounded-2xl p-5 relative overflow-hidden"
+                        style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)' }}>
+                        <div className="absolute inset-0 opacity-20"
+                            style={{ backgroundImage: 'radial-gradient(circle at 80% 20%, #dc2626, transparent 70%)' }}></div>
+                        <div className="relative z-10 flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                                <Wallet size={20} className="text-rose-400" />
                             </div>
                             <div>
-                                <h2 className="text-xl font-bold text-gray-900 tracking-tight">Expenses</h2>
-                                <p className="text-sm text-gray-400 mt-0.5">Monitor and control your spending habits</p>
+                                <p className="text-xs text-gray-400 mb-0.5">Total Expenses</p>
+                                <p className="text-2xl font-bold text-white">${totalExpense.toLocaleString()}</p>
                             </div>
                         </div>
-                        <button
-                            onClick={() => setOpenAddExpenseModal(true)}
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-red-500/25 hover:shadow-red-500/40 transition-all duration-200 active:scale-[0.98]"
-                        >
-                            <Plus size={16} strokeWidth={2.5} />
-                            Add Expense
-                        </button>
+                    </div>
+                    <div className="rounded-2xl p-5 bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center">
+                                <Receipt size={20} className="text-gray-600" />
+                            </div>
+                            <div>
+                                <p className="text-xs text-gray-400 mb-0.5">Transactions</p>
+                                <p className="text-2xl font-bold text-gray-900">{expenseData.length}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="rounded-2xl p-5 bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center">
+                                <TrendingDown size={20} className="text-rose-500" />
+                            </div>
+                            <div>
+                                <p className="text-xs text-gray-400 mb-0.5">Highest Entry</p>
+                                <p className="text-2xl font-bold text-gray-900">${highestExpense.toLocaleString()}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-5">
-                    <ExpenseOverview
-                        transactions={expenseData}
-                        onExpenseIncome={() => setOpenAddExpenseModal(true)}
-                    />
-
-                    <ExpenseList
-                        transactions={expenseData}
-                        onDelete={(id) => {
-                            setOpenDeleteAlert({ show: true, data: id });
-                        }}
-                        onDownload={handleDownloadExpenseDetails}
-                        onEmail={handleEmailExpenseDetails}
-                    />
-
-                    <Modal
-                        isOpen={openAddExpenseModal}
-                        onClose={() => setOpenAddExpenseModal(false)}
-                        title="Add Expense"
-                    >
-                        {/* Pass the fetched expense categories to the AddExpenseForm */}
-                        <AddExpenseForm
-                            onAddExpense={handleAddExpense}
-                            categories={categories} // Pass categories here
-                        />
-                    </Modal>
-
-                    <Modal
-                        isOpen={openDeleteAlert.show}
-                        onClose={() => setOpenDeleteAlert({ show: false, data: null })}
-                        title="Delete Expense"
-                    >
-                        <DeleteAlert
-                            content="Are you sure you want to delete this expense detail?"
-                            onDelete={() => deleteExpense(openDeleteAlert.data)}
-                        />
-                    </Modal>
+                <div className="grid grid-cols-1 gap-6">
+                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                        <ExpenseOverview transactions={expenseData} onExpenseIncome={() => setOpenAddExpenseModal(true)} />
+                    </div>
+                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                        <ExpenseList transactions={expenseData} onDelete={(id) => setOpenDeleteAlert({ show: true, data: id })}
+                            onDownload={handleDownloadExpenseDetails} onEmail={handleEmailExpenseDetails} />
+                    </div>
                 </div>
+
+                <Modal isOpen={openAddExpenseModal} onClose={() => setOpenAddExpenseModal(false)} title="Add Expense">
+                    <AddExpenseForm onAddExpense={handleAddExpense} categories={categories} />
+                </Modal>
+
+                <Modal isOpen={openDeleteAlert.show} onClose={() => setOpenDeleteAlert({ show: false, data: null })} title="Delete Expense">
+                    <DeleteAlert content="Are you sure you want to delete this expense detail?" onDelete={() => deleteExpense(openDeleteAlert.data)} />
+                </Modal>
             </div>
         </Dashboard>
     );

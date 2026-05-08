@@ -1,7 +1,6 @@
 import Dashboard from "../components/Dashboard.jsx";
 import {useUser} from "../hooks/useUser.jsx";
-import InfoCard from "../components/InfoCard.jsx";
-import {Coins, Wallet, WalletCards, TrendingUp, ArrowUpRight, ArrowDownRight, CreditCard, Landmark, Activity, Shield, Globe, Zap, BarChart3, ChevronRight, ExternalLink, Github, Linkedin, Mail, Phone, MapPin, BookOpen, Award, Calendar, Users, Clock} from "lucide-react";
+import {Coins, Wallet, WalletCards, TrendingUp, ArrowUpRight, ArrowDownRight, CreditCard, Landmark, Activity, Shield, Globe, Zap, BarChart3, ChevronRight, ExternalLink, Github, Linkedin, Mail, Phone, MapPin, BookOpen, Award, Calendar, Users, Clock, Sparkles, Target, Bell, Download} from "lucide-react";
 import {addThousandsSeparator} from "../util/util.js";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState, useRef} from "react";
@@ -32,7 +31,6 @@ const stockData = [
 const StockTicker = () => {
     return (
         <div className="w-full bg-slate-900 border-y border-slate-800 overflow-hidden py-2 relative">
-            {/* Fade edges */}
             <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-slate-900 to-transparent z-10"></div>
             <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-slate-900 to-transparent z-10"></div>
             
@@ -71,13 +69,11 @@ const PremiumCard = ({ type, balance, change, holder, number, expiry, gradient, 
                 border: '1px solid rgba(255,255,255,0.1)',
             }}>
             
-            {/* Animated background orbs */}
             <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full opacity-20 animate-pulse"
                 style={{background: `radial-gradient(circle, ${accentColor}, transparent)`, filter: 'blur(40px)'}}></div>
             <div className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full opacity-10 animate-pulse"
                 style={{background: `radial-gradient(circle, #fff, transparent)`, filter: 'blur(40px)', animationDelay: '1s'}}></div>
             
-            {/* Holographic shine effect */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                 style={{
                     background: 'linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.1) 45%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 55%, transparent 60%)',
@@ -85,13 +81,11 @@ const PremiumCard = ({ type, balance, change, holder, number, expiry, gradient, 
                     animation: 'shine 3s ease-in-out infinite',
                 }}></div>
 
-            {/* Glass edge highlight */}
             <div className="absolute inset-0 rounded-3xl pointer-events-none"
                 style={{
                     background: 'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.05) 100%)',
                 }}></div>
 
-            {/* Card Chip - EMV style */}
             <div className="absolute top-6 left-6 w-12 h-9 rounded-lg opacity-80"
                 style={{
                     background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)',
@@ -102,7 +96,6 @@ const PremiumCard = ({ type, balance, change, holder, number, expiry, gradient, 
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-0.5 bg-amber-800/20"></div>
             </div>
 
-            {/* Contactless/NFC icon */}
             <div className="absolute top-6 right-6 opacity-40">
                 <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none">
                     <path d="M9 15c0-2.8 2.2-5 5-5M7 19c0-4.4 3.6-8 8-8M5 23c0-6 4.9-11 11-11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -110,7 +103,6 @@ const PremiumCard = ({ type, balance, change, holder, number, expiry, gradient, 
             </div>
 
             <div className="relative z-10 h-full flex flex-col justify-between pt-12">
-                {/* Card Type Badge */}
                 <div className="flex items-center gap-2 mb-4">
                     <div className={`w-2 h-2 rounded-full ${isDebit ? 'bg-emerald-400' : 'bg-amber-400'} animate-pulse`}></div>
                     <span className="text-[10px] font-bold text-white/60 uppercase tracking-[0.2em]">
@@ -118,7 +110,6 @@ const PremiumCard = ({ type, balance, change, holder, number, expiry, gradient, 
                     </span>
                 </div>
 
-                {/* Balance Section */}
                 <div className="mb-6">
                     <p className="text-[10px] text-white/50 uppercase tracking-widest mb-1 font-medium">Available Balance</p>
                     <p className="text-4xl font-bold text-white tracking-tight font-mono">
@@ -133,9 +124,7 @@ const PremiumCard = ({ type, balance, change, holder, number, expiry, gradient, 
                     </div>
                 </div>
 
-                {/* Card Details */}
                 <div className="space-y-4">
-                    {/* Card Number */}
                     <div className="flex items-center gap-3">
                         {[...Array(3)].map((_, i) => (
                             <div key={i} className="flex gap-1">
@@ -147,7 +136,6 @@ const PremiumCard = ({ type, balance, change, holder, number, expiry, gradient, 
                         <span className="ml-2 text-sm font-mono text-white/70 tracking-widest font-semibold">{number}</span>
                     </div>
 
-                    {/* Bottom Info */}
                     <div className="flex items-end justify-between">
                         <div>
                             <p className="text-[10px] text-white/40 uppercase tracking-widest mb-0.5">Card Holder</p>
@@ -158,7 +146,6 @@ const PremiumCard = ({ type, balance, change, holder, number, expiry, gradient, 
                             <p className="text-sm font-semibold text-white/90 font-mono">{expiry}</p>
                         </div>
                         
-                        {/* Card Network Logo */}
                         <div className="ml-4 opacity-80">
                             {isDebit ? (
                                 <div className="flex items-center gap-1">
@@ -203,114 +190,75 @@ const QuickActionCard = ({ icon: Icon, label, value, trend, color, onClick }) =>
     </div>
 );
 
-// Professional College Project Footer
-const CollegeFooter = () => {
+// Modern Professional Footer
+const ModernFooter = () => {
     const currentYear = new Date().getFullYear();
     
     return (
-        <footer className="mt-12 bg-slate-50 border-t border-slate-200">
-            {/* Main Footer Content */}
+        <footer className="mt-12 bg-slate-900 border-t border-slate-800">
             <div className="max-w-7xl mx-auto px-6 py-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    
-                    {/* Project Info */}
                     <div className="lg:col-span-2">
                         <div className="flex items-center gap-3 mb-4">
                             <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-600/20">
                                 <WalletCards className="w-5 h-5 text-white" />
                             </div>
                             <div>
-                                <h3 className="text-lg font-bold text-slate-900">FinTrack Pro</h3>
-                                <p className="text-xs text-slate-500 font-medium">Personal Finance Management System</p>
+                                <h3 className="text-lg font-bold text-white">FinTrack Pro</h3>
+                                <p className="text-xs text-slate-400 font-medium">Personal Finance Management</p>
                             </div>
                         </div>
-                        <p className="text-sm text-slate-600 leading-relaxed mb-4 max-w-md">
-                            A comprehensive personal finance dashboard built as part of the <span className="font-semibold text-slate-800">B.Tech Computer Science</span> curriculum. 
-                            Features real-time transaction tracking, budget analytics, and financial visualization.
+                        <p className="text-sm text-slate-400 leading-relaxed mb-4 max-w-md">
+                            Empowering individuals to take control of their financial future through intelligent tracking, 
+                            insightful analytics, and seamless money management.
                         </p>
                         <div className="flex items-center gap-3">
-                            <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold border border-emerald-200">
+                            <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20">
                                 React 18
                             </span>
-                            <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold border border-blue-200">
+                            <span className="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold border border-blue-500/20">
                                 Tailwind CSS
                             </span>
-                            <span className="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-bold border border-purple-200">
+                            <span className="px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-bold border border-purple-500/20">
                                 Node.js
                             </span>
                         </div>
                     </div>
 
-                    {/* Academic Details */}
                     <div>
-                        <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
-                            <BookOpen size={14} className="text-emerald-600" />
-                            Academic Info
-                        </h4>
-                        <ul className="space-y-3 text-sm text-slate-600">
-                            <li className="flex items-start gap-2">
-                                <Award size={14} className="text-amber-500 mt-0.5 shrink-0" />
-                                <span>Major Project - 8th Semester</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <Users size={14} className="text-blue-500 mt-0.5 shrink-0" />
-                                <span>Supervised by Prof. [Guide Name]</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <Calendar size={14} className="text-rose-500 mt-0.5 shrink-0" />
-                                <span>Session: {currentYear-1}-{currentYear}</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <Clock size={14} className="text-purple-500 mt-0.5 shrink-0" />
-                                <span>Duration: Jan 2026 - May 2026</span>
-                            </li>
+                        <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Product</h4>
+                        <ul className="space-y-2.5 text-sm text-slate-400">
+                            <li><Link to="/dashboard" className="hover:text-emerald-400 transition-colors">Dashboard</Link></li>
+                            <li><Link to="/income" className="hover:text-emerald-400 transition-colors">Income</Link></li>
+                            <li><Link to="/expense" className="hover:text-emerald-400 transition-colors">Expenses</Link></li>
+                            <li><Link to="/category" className="hover:text-emerald-400 transition-colors">Categories</Link></li>
+                            <li><Link to="/filters" className="hover:text-emerald-400 transition-colors">Filters</Link></li>
                         </ul>
                     </div>
 
-                    {/* Developer Contact */}
                     <div>
-                        <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
-                            <Users size={14} className="text-emerald-600" />
-                            Developer
-                        </h4>
+                        <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Connect</h4>
                         <div className="space-y-3">
-                            <div className="flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-100 shadow-sm">
-                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white font-bold text-sm">
-                                    RP
-                                </div>
-                                <div>
-                                    <p className="text-sm font-bold text-slate-900">Roshan Prakhar</p>
-                                    <p className="text-xs text-slate-500">Full Stack Developer</p>
-                                </div>
+                            <a href="mailto:roshanprakhar@gmail.com" className="flex items-center gap-2 text-sm text-slate-400 hover:text-emerald-400 transition-colors group">
+                                <Mail size={14} className="text-slate-500 group-hover:text-emerald-400" />
+                                roshanprakhar@gmail.com
+                            </a>
+                            <a href="tel:+919508849293" className="flex items-center gap-2 text-sm text-slate-400 hover:text-emerald-400 transition-colors group">
+                                <Phone size={14} className="text-slate-500 group-hover:text-emerald-400" />
+                                +91-9508849293
+                            </a>
+                            <div className="flex items-center gap-2 text-sm text-slate-400">
+                                <MapPin size={14} className="text-slate-500" />
+                                India
                             </div>
-                            
-                            <div className="space-y-2">
-                                <a href="mailto:roshanprakhar@gmail.com" className="flex items-center gap-2 text-sm text-slate-600 hover:text-emerald-600 transition-colors group">
-                                    <Mail size={14} className="text-slate-400 group-hover:text-emerald-500" />
-                                    roshanprakhar@gmail.com
-                                </a>
-                                <a href="tel:+919508849293" className="flex items-center gap-2 text-sm text-slate-600 hover:text-emerald-600 transition-colors group">
-                                    <Phone size={14} className="text-slate-400 group-hover:text-emerald-500" />
-                                    +91-9508849293
-                                </a>
-                                <div className="flex items-center gap-2 text-sm text-slate-600">
-                                    <MapPin size={14} className="text-slate-400" />
-                                    <span>India</span>
-                                </div>
-                            </div>
-
                             <div className="flex items-center gap-2 pt-2">
                                 <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
-                                    className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-800 hover:text-white flex items-center justify-center transition-all duration-300 text-slate-600">
+                                    className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition-all duration-300 text-slate-400">
                                     <Github size={16} />
                                 </a>
                                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-                                    className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-blue-600 hover:text-white flex items-center justify-center transition-all duration-300 text-slate-600">
+                                    className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-blue-600 hover:text-white flex items-center justify-center transition-all duration-300 text-slate-400">
                                     <Linkedin size={16} />
-                                </a>
-                                <a href="mailto:roshanprakhar@gmail.com"
-                                    className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-rose-500 hover:text-white flex items-center justify-center transition-all duration-300 text-slate-600">
-                                    <Mail size={16} />
                                 </a>
                             </div>
                         </div>
@@ -318,20 +266,16 @@ const CollegeFooter = () => {
                 </div>
             </div>
 
-            {/* Bottom Bar */}
-            <div className="border-t border-slate-200 bg-white">
+            <div className="border-t border-slate-800 bg-slate-950">
                 <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="flex items-center gap-2 text-xs text-slate-500">
                         <Shield size={12} className="text-emerald-500" />
                         <span>© {currentYear} FinTrack Pro. All rights reserved.</span>
-                        <span className="hidden sm:inline text-slate-300">|</span>
-                        <span className="hidden sm:inline">Built for educational purposes</span>
                     </div>
-                    
                     <div className="flex items-center gap-4 text-xs text-slate-500">
                         <span className="flex items-center gap-1">
-                            <Zap size={12} className="text-amber-500" />
-                            Powered by React & Tailwind
+                            <Sparkles size={12} className="text-amber-500" />
+                            Crafted with precision
                         </span>
                         <span className="flex items-center gap-1">
                             <Globe size={12} className="text-blue-500" />
@@ -370,7 +314,6 @@ const Home = () => {
 
     return (
         <Dashboard activeMenu="Dashboard">
-            {/* Inject marquee animation styles */}
             <style>{`
                 @keyframes marquee {
                     0% { transform: translateX(0); }
@@ -389,7 +332,6 @@ const Home = () => {
             `}</style>
 
             <div className="my-5 mx-auto max-w-7xl px-4 sm:px-6">
-                {/* Page Header with Stock Ticker Integration */}
                 <div className="mb-6 flex flex-col gap-4">
                     <div className="flex items-center justify-between">
                         <div>
@@ -401,8 +343,6 @@ const Home = () => {
                             {new Date().toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'})}
                         </div>
                     </div>
-                    
-                    {/* Live Stock Ticker Bar */}
                     <StockTicker />
                 </div>
 
@@ -413,9 +353,7 @@ const Home = () => {
                     </div>
                 ) : (
                     <>
-                        {/* Premium Cards Section - ATM Style */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                            {/* Primary Card - Glassmorphism Dark */}
                             <PremiumCard 
                                 type="debit"
                                 balance={dashboardData?.totalBalance || 0}
@@ -426,8 +364,6 @@ const Home = () => {
                                 gradient="linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #334155 60%, #1e293b 100%)"
                                 accentColor="#10b981"
                             />
-
-                            {/* Secondary Card - Credit Card Style */}
                             <PremiumCard 
                                 type="credit"
                                 balance={dashboardData?.totalIncome || 0}
@@ -440,7 +376,6 @@ const Home = () => {
                             />
                         </div>
 
-                        {/* Quick Stats Grid */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                             <QuickActionCard 
                                 icon={Wallet}
@@ -476,7 +411,6 @@ const Home = () => {
                             />
                         </div>
 
-                        {/* Bottom Grid - Enhanced */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
                                 <RecentTransactions
@@ -484,7 +418,6 @@ const Home = () => {
                                     onMore={() => navigate("/expense")}
                                 />
                             </div>
-
                             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
                                 <FinanceOverview
                                     totalBalance={dashboardData?.totalBalance || 0}
@@ -492,7 +425,6 @@ const Home = () => {
                                     totalExpense={dashboardData?.totalExpense || 0}
                                 />
                             </div>
-
                             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
                                 <Transactions
                                     transactions={dashboardData?.recent5Expenses || []}
@@ -501,7 +433,6 @@ const Home = () => {
                                     title="Recent Expenses"
                                 />
                             </div>
-
                             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
                                 <Transactions
                                     transactions={dashboardData?.recent5Incomes || []}
@@ -512,8 +443,7 @@ const Home = () => {
                             </div>
                         </div>
 
-                        {/* Professional College Project Footer */}
-                        <CollegeFooter />
+                        <ModernFooter />
                     </>
                 )}
             </div>
