@@ -1,6 +1,6 @@
 import Dashboard from "../components/Dashboard.jsx";
 import {useUser} from "../hooks/useUser.jsx";
-import {Search, SlidersHorizontal, Filter, ArrowUpDown, CalendarDays, Tag, Type} from "lucide-react";
+import {Search, SlidersHorizontal, Filter as FilterIcon, ArrowUpDown, CalendarDays, Tag, Type} from "lucide-react";
 import {useState} from "react";
 import axiosConfig from "../util/axiosConfig.jsx";
 import {API_ENDPOINTS} from "../util/apiEndpoints.js";
@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import TransactionInfoCard from "../components/TransactionInfoCard.jsx";
 import moment from "moment";
 
-const Filter = () => {
+const FilterPage = () => {
     useUser();
     const [type, setType] = useState("income");
     const [startDate, setStartDate] = useState("");
@@ -177,4 +177,4 @@ const Filter = () => {
     );
 };
 
-export default Filter
+export default FilterPage;
