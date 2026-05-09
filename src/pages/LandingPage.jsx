@@ -273,7 +273,7 @@ const ModernFooter = () => {
                                 <a href="https://github.com/Roshan-prakhar" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition-all duration-300 text-slate-400">
                                     <Github size={16} />
                                 </a>
-                                <a href="https://linkedin.com/in/Roshab-prakhar" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-blue-600 hover:text-white flex items-center justify-center transition-all duration-300 text-slate-400">
+                                <a href="https://linkedin.com/in/Roshan-prakhar" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-blue-600 hover:text-white flex items-center justify-center transition-all duration-300 text-slate-400">
                                     <Linkedin size={16} />
                                 </a>
                             </div>
