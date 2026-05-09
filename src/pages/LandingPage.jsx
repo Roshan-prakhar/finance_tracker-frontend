@@ -5,7 +5,7 @@ import FeaturesSection from "../components/FeaturesSection.jsx";
 import StatsSection from "../components/StatsSection.jsx";
 import Footer from "../components/Footer.jsx";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, ArrowDownRight, Activity, Shield, Globe, Zap, Github, Linkedin, Mail, Phone, MapPin, BookOpen, Award, Calendar, Users, Clock, ChevronRight, WalletCards, TrendingUp, BarChart3, LayoutDashboard, PieChart, Settings, HelpCircle, LogIn, UserPlus, Sparkles, Target, Download } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, Activity, Shield, Globe, Zap, Github, Linkedin, Mail, Phone, MapPin, BookOpen, Award, Calendar, Users, Clock, ChevronRight, WalletCards, TrendingUp, BarChart3, LayoutDashboard, PieChart, Settings, HelpCircle, LogIn, UserPlus, Sparkles, Target, Download, Lock, Eye, Wallet } from "lucide-react";
 
 /* ─── Stock Ticker Data ─── */
 const stockData = [
@@ -53,10 +53,10 @@ const StockTicker = () => (
 const EnhancedHeader = () => {
     const navItems = [
         { label: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
-        { label: 'Analytics', icon: PieChart, href: '/analytics' },
-        { label: 'Features', icon: Zap, href: '#features' },
-        { label: 'Pricing', icon: WalletCards, href: '#pricing' },
-        { label: 'Support', icon: HelpCircle, href: '/support' },
+        { label: 'Income', icon: TrendingUp, href: '/income' },
+        { label: 'Expense', icon: BarChart3, href: '/expense' },
+        { label: 'Categories', icon: WalletCards, href: '/category' },
+        { label: 'Filters', icon: PieChart, href: '/filters' },
     ];
 
     return (
@@ -445,7 +445,8 @@ const FinmaFeatures = () => {
     );
 };
 
-const FinmaStats = () => (
+/* ─── App Capabilities Section (replaces fake stats) ─── */
+const AppCapabilities = () => (
     <section className="py-16 px-6" style={{ background: '#f0f4f0' }}>
         <div className="max-w-4xl mx-auto">
             <div className="rounded-3xl p-8 md:p-10 relative overflow-hidden"
@@ -453,13 +454,28 @@ const FinmaStats = () => (
                 <div className="absolute inset-0 opacity-20 pointer-events-none"
                     style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, #16a34a, transparent 60%), radial-gradient(circle at 80% 20%, #22c55e, transparent 50%)' }}></div>
 
-                <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                    {[{ value: '10K+', label: 'Active Users' }, { value: '$2M+', label: 'Tracked Monthly' }, { value: '99.9%', label: 'Uptime' }, { value: '4.9★', label: 'User Rating' }].map((stat, i) => (
-                        <div key={i}>
-                            <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
-                            <p className="text-sm text-gray-400">{stat.label}</p>
-                        </div>
-                    ))}
+                <div className="relative z-10">
+                    <div className="text-center mb-10">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">Why Choose FinTrack Pro?</h2>
+                        <p className="text-sm text-gray-400 max-w-md mx-auto">Built for personal use with enterprise-grade features and bank-level security.</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        {[
+                            { icon: Lock, title: 'Secure', desc: 'End-to-end encryption' },
+                            { icon: Eye, title: 'Transparent', desc: 'Clear visual insights' },
+                            { icon: Zap, title: 'Fast', desc: 'Real-time updates' },
+                            { icon: Wallet, title: 'Free', desc: 'No hidden charges' },
+                        ].map((item, i) => (
+                            <div key={i} className="text-center group">
+                                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-emerald-500/20 group-hover:border-emerald-500/30 transition-all duration-300">
+                                    <item.icon size={22} className="text-emerald-400" />
+                                </div>
+                                <p className="text-sm font-bold text-white mb-1">{item.title}</p>
+                                <p className="text-xs text-gray-400">{item.desc}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
@@ -470,7 +486,7 @@ const FinmaCTA = () => (
     <section id="pricing" className="py-20 px-6 bg-white">
         <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to take control?</h2>
-            <p className="text-gray-400 mb-8">Join thousands of users already managing their finances smarter.</p>
+            <p className="text-gray-400 mb-8">Start managing your personal finances with precision and clarity.</p>
             <Link to="/signup" className="inline-flex items-center gap-2 px-8 py-4 text-sm font-semibold text-white rounded-xl transition-all duration-200 hover:opacity-90 active:scale-95"
                 style={{ background: '#16a34a', boxShadow: '0 8px 24px rgba(22,163,74,0.35)' }}>
                 Start for Free
@@ -495,7 +511,7 @@ const LandingPage = () => {
             <main>
                 <FinmaHero />
                 <FinmaFeatures />
-                <FinmaStats />
+                <AppCapabilities />
                 <FinmaCTA />
             </main>
             <ModernFooter />
