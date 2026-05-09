@@ -2,7 +2,7 @@ import Dashboard from "../components/Dashboard.jsx";
 import {useUser} from "../hooks/useUser.jsx";
 import {Coins, Wallet, WalletCards, TrendingUp, ArrowUpRight, ArrowDownRight, CreditCard, Landmark, Activity, Shield, Globe, Zap, BarChart3, ChevronRight, ExternalLink, Github, Linkedin, Mail, Phone, MapPin, BookOpen, Award, Calendar, Users, Clock, Sparkles, Target, Bell, Download} from "lucide-react";
 import {addThousandsSeparator} from "../util/util.js";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 import {useEffect, useState, useRef} from "react";
 import axiosConfig from "../util/axiosConfig.jsx";
 import {API_ENDPOINTS} from "../util/apiEndpoints.js";
