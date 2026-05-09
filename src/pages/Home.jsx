@@ -442,8 +442,6 @@ const Home = () => {
                                 />
                             </div>
                         </div>
-
-                        <ModernFooter />
                     </>
                 )}
             </div>
